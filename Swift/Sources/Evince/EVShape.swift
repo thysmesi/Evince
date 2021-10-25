@@ -40,21 +40,27 @@ public class EVShape: EVRenderable {
         ])
         let center = Self.absToRel(of: polygon.center)
         let screen = Size(UIScreen.main.bounds.size)
-//        0.46208530805687204
-//        2.164102564102564
-        let aspect: Float = 0.46208530805687204
+
+        let aspect = matrix_float4x4(rows: [
+            [1, 0, 0,0],
+            [0, 0.46208530805687204, 0,0],
+            [0, 0, 1,0],
+            [0,0,0,1]
+        ])
+
         var b = matrix_multiply(matrix_float4x4(rows: [
             [1, 0, 0,center.x],
-            [0, 1, 0,center.y * aspect],
+            [0, 1, 0,center.y],
             [0, 0, 1,0],
             [0,0,0,1]
         ]), rotation)
         var c = matrix_multiply(b, matrix_float4x4(rows: [
             [1, 0, 0,-center.x],
-            [0, 1, 0,-center.y * aspect],
+            [0, 1, 0,-center.y],
             [0, 0, 1,0],
             [0,0,0,1]
         ]))
+        
 
 
         
