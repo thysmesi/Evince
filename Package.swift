@@ -22,6 +22,8 @@ let package = Package(
         .target(
             name: "Evince",
             dependencies: ["Surrow"],
-            path: "Swift/Sources/Evince"),
+            path: "Swift/Sources/Evince",
+            resources: [.copy("Metal/")]
+        ),
     ]
 )
