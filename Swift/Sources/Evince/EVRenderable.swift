@@ -43,7 +43,8 @@ public extension EVRenderable {
     func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
         let libraryURL: URL = Bundle.module.url(forResource: "EVShaders", withExtension: "metal", subdirectory: "Metal")!
 //        guard let metalDevice: MTLDevice = MTLCreateSystemDefaultDevice() else { return }
-        let library = try? device.makeLibrary(filepath: libraryURL.path)
+        
+        let library = try? device.makeLibrary(URL: libraryURL)//device.makeLibrary(filepath: libraryURL.path)
 //        guard let metalShader: MTLFunction = metalLib.makeFunction(name: "myMetalFunc") else { return }
 
 //        let library = device.makeDefaultLibrary()
