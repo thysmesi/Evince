@@ -54,8 +54,8 @@ public class EVShape: EVRenderable {
         let screen = Size(UIScreen.main.bounds.size)
 
         var c = matrix_multiply(matrix_float4x4(rows: [
-            [1, 0, 0,0],
-            [0, 1 * Float(screen.min / screen.max), 0,0],
+            [screen.width > screen.height ? 1 * Float(screen.min / screen.max) : 1, 0, 0,0],
+            [0, screen.width < screen.height ? 1 / Float(screen.min / screen.max) : 1, 0,0],
             [0, 0, 1,0],
             [0,0,0,1]
         ]), b)
