@@ -52,7 +52,7 @@ public class EVShape: EVRenderable {
             [0, 1, 0,center.y],
             [0, 0, 1,0],
             [0,0,0,1]
-        ]), rotation)
+        ]), a)
         var c = matrix_multiply(a, matrix_float4x4(rows: [
             [1, 0, 0,-center.x],
             [0, 1, 0,-center.y],
