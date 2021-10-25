@@ -66,7 +66,7 @@ public class EVShape: EVRenderable {
             [0, 0, 1,0],
             [0,0,0,1]
         ])
-        let matrix = matrix_multiply(scale, matrix_multiply(translation, b))
+        let matrix = matrix_multiply(scale, matrix_multiply(translation, c))
         return EVTransformations(matrix: matrix)
     }
 
