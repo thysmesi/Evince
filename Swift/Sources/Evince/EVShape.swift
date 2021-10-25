@@ -27,10 +27,15 @@ public class EVShape: EVRenderable {
             [0, 0, 1,0],
             [0,0,0,1]
         ])
-//        matrix_float4x4()
+        
+        let c = cos(self.rotation)
+        let s = sin(self.rotation)
+        let x: Float = -1
+        let y: Float = -1
+        
         let rotation = matrix_float4x4(rows: [
-            [cos(self.rotation),-sin(self.rotation), 0,0],
-            [sin(self.rotation), cos(self.rotation), 0,0],
+            [x * x + (1 - x * x) * c, x * y * (1 - c) * s, 0,0],
+            [x * y * (1 - c) * s, y * y + (1 - y * y) * c, 0,0],
             [0, 0, 1,0],
             [0,0,0,1]
         ])
