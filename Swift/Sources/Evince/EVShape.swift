@@ -30,7 +30,7 @@ public class EVShape: EVRenderable {
         return EVTransformations(matrix: matrix)
     }
 
-    var pipelineState: MTLRenderPipelineState!
+    public var pipelineState: MTLRenderPipelineState!
     public let vertexFunctionName: String
     public let fragmentFunctionName: String
     public let device: MTLDevice
