@@ -16,6 +16,7 @@ public class EVShape: EVRenderable {
         return SIMD3<Float>(Float(relative.x), Float(relative.y), 0)
     }
     
+    public var polygon: Polygon
     public var position = SIMD2<Float>(repeating: 0)
     public var rotation: Float = 0
     public var scale = SIMD2<Float>(repeating: 1)
@@ -37,15 +38,16 @@ public class EVShape: EVRenderable {
             [0, 0, 1,0],
             [0,0,0,1]
         ])
+        let center = Self.absToRel(of: polygon.center)
         var a = matrix_multiply(matrix_float4x4(rows: [
-            [1, 0, 0,-1],
-            [0, 1, 0,-1],
+            [1, 0, 0,center.x],
+            [0, 1, 0,center.y],
             [0, 0, 1,0],
             [0,0,0,1]
         ]), rotation)
         var b = matrix_multiply(a, matrix_float4x4(rows: [
-            [1, 0, 0,1],
-            [0, 1, 0,1],
+            [1, 0, 0,-center.x],
+            [0, 1, 0,-center.y],
             [0, 0, 1,0],
             [0,0,0,1]
         ]))
@@ -78,6 +80,7 @@ public class EVShape: EVRenderable {
         self.fragmentFunctionName = fragmentFunctionName
         self.color = color
         self.device = device
+        self.polygon = box.polygon
         
         if let path = textureName {
             setTexture(imageName: path)
@@ -105,6 +108,7 @@ public class EVShape: EVRenderable {
         self.fragmentFunctionName = fragmentFunctionName
         self.color = color
         self.device = device
+        self.polygon = polygon
         
         if let path = textureName {
             setTexture(imageName: path)
