@@ -54,7 +54,7 @@ public class EVShape: EVRenderable {
         
         let scale = matrix_float4x4(rows: [
             [self.scale.x, 0, 0,0],
-            [0, self.scale.y * Float((UIScreen.main.bounds.width / UIScreen.main.bounds.height)), 0,0],
+            [0, self.scale.y / Float((UIScreen.main.bounds.width / UIScreen.main.bounds.height)), 0,0],
             [0, 0, 1,0],
             [0,0,0,1]
         ])
