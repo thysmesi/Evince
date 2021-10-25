@@ -9,23 +9,25 @@ import SwiftUI
 import MetalKit
 import Surrow
 
-struct EVSceneView: View {
+@available(iOS 14.0, *)
+public struct EVSceneView: View {
 //    let scene: EVScene
-    let mtkView = MTKView(frame: UIScreen.main.bounds, device: MTLCreateSystemDefaultDevice()!)
-    let renderer: EVRenderer
+    public let mtkView = MTKView(frame: UIScreen.main.bounds, device: MTLCreateSystemDefaultDevice()!)
+    public let renderer: EVRenderer
     
-    init(scene: EVScene) {
+    public init(scene: EVScene) {
         self.renderer = EVRenderer(device: MTLCreateSystemDefaultDevice()!)
         scene.children.append(EVShape(Box(position: Point(100, 100), size: Size(100, 100)), color: Color.red, device: renderer.device))
         self.renderer.scene = scene
         mtkView.delegate = self.renderer
     }
     
-    var body: some View {
+    public var body: some View {
         MTKViewRepresentable(mtkView: mtkView)
     }
 }
 
+@available(iOS 13.0, *)
 private struct MTKViewRepresentable: UIViewRepresentable {
     typealias UIViewType = MTKView
     var mtkView: MTKView
@@ -38,11 +40,5 @@ private struct MTKViewRepresentable: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MTKView, context: Context) {
-    }
-}
-
-struct EVSceneView_Previews: PreviewProvider {
-    static var previews: some View {
-        EVSceneView(scene: EVScene(device: MTLCreateSystemDefaultDevice()!))
     }
 }

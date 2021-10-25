@@ -7,16 +7,20 @@
 
 import Metal
 
-class EVScene {
-    var device: MTLDevice
-    var children: [EVShape] = []
-    var update: ((_ delta: Float) -> Void) = {_ in }
+@available(iOS 13.0, *)
+@available(macOS 10.15, *)
 
-    init(device: MTLDevice) {
+@available(iOS 14.0, *)
+public class EVScene {
+    public var device: MTLDevice
+    public var children: [EVShape] = []
+    public var update: ((_ delta: Float) -> Void) = {_ in }
+
+    public init(device: MTLDevice) {
         self.device = device
     }
     
-    func render(commandEncoder: MTLRenderCommandEncoder, delta: Float) {
+    public func render(commandEncoder: MTLRenderCommandEncoder, delta: Float) {
         update(delta)
         
         for child in children {

@@ -8,28 +8,29 @@
 import SwiftUI
 import Surrow
 
-class EVShape: EVRenderable {
-    static func absToRel(of point: Point) -> SIMD3<Float> {
+@available(iOS 14.0, *)
+public class EVShape: EVRenderable {
+    public static func absToRel(of point: Point) -> SIMD3<Float> {
         let relative = point * 2 / Size(UIScreen.main.bounds.size) * Vector(1, -1) + Vector(-1, 1)
         return SIMD3<Float>(Float(relative.x), Float(relative.y), 0)
     }
 
     
-    var pipelineState: MTLRenderPipelineState!
-    let vertexFunctionName: String
-    let fragmentFunctionName: String
-    let device: MTLDevice
-    let color: Color
-    let vertices: [EVVertex]
-    let indices: [UInt16]
-    let texture: MTLTexture?
+    public var pipelineState: MTLRenderPipelineState!
+    public let vertexFunctionName: String
+    public let fragmentFunctionName: String
+    public let device: MTLDevice
+    public let color: Color
+    public let vertices: [EVVertex]
+    public let indices: [UInt16]
+    public let texture: MTLTexture?
     
-    var transformations = EVTransformations()
+    public var transformations = EVTransformations()
     
-    var vertexBuffer: MTLBuffer?
-    var indexBuffer: MTLBuffer?
+    public var vertexBuffer: MTLBuffer?
+    public var indexBuffer: MTLBuffer?
     
-    init(_ box: Box, color: Color = .gray, device: MTLDevice, texture: MTLTexture? = nil, vertexFunctionName: String = "ev_vertex_shader", fragmentFunctionName: String = "ev_fragment_shader") {
+    public init(_ box: Box, color: Color = .gray, device: MTLDevice, texture: MTLTexture? = nil, vertexFunctionName: String = "ev_vertex_shader", fragmentFunctionName: String = "ev_fragment_shader") {
         self.vertexFunctionName = vertexFunctionName
         self.fragmentFunctionName = fragmentFunctionName
         self.color = color
@@ -62,7 +63,7 @@ class EVShape: EVRenderable {
                                         options: [])
     }
     
-    func render(commandEncoder: MTLRenderCommandEncoder) {
+    public func render(commandEncoder: MTLRenderCommandEncoder) {
         guard let indexBuffer = indexBuffer else { return }
         
         commandEncoder.setRenderPipelineState(pipelineState)

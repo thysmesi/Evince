@@ -7,7 +7,8 @@
 
 import MetalKit
 
-class EVRenderer: NSObject {
+@available(iOS 14.0, *)
+public class EVRenderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
 
@@ -16,7 +17,7 @@ class EVRenderer: NSObject {
     var samplerState: MTLSamplerState?
     var depthStencilState: MTLDepthStencilState?
 
-    init(device: MTLDevice) {
+    public init(device: MTLDevice) {
         self.device = device
         commandQueue = device.makeCommandQueue()!
         super.init()
@@ -38,10 +39,11 @@ class EVRenderer: NSObject {
     }
 }
 
+@available(iOS 14.0, *)
 extension EVRenderer: MTKViewDelegate {
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
+    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
 
-    func draw(in view: MTKView) {
+    public func draw(in view: MTKView) {
         guard let drawable = view.currentDrawable,
             let descriptor = view.currentRenderPassDescriptor else { return }
         let commandBuffer = commandQueue.makeCommandBuffer()!

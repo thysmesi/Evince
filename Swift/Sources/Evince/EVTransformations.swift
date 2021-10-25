@@ -7,6 +7,6 @@
 
 import simd
 
-struct EVTransformations {
+public struct EVTransformations {
     var matrix = matrix_identity_float4x4
 }

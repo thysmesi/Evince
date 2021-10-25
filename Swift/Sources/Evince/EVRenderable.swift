@@ -7,7 +7,9 @@
 
 import Metal
 
-protocol EVRenderable: AnyObject {
+@available(iOS 13.0, *)
+@available(macOS 10.15, *)
+public protocol EVRenderable: AnyObject {
     var pipelineState: MTLRenderPipelineState! { get set }
     var vertexFunctionName: String { get }
     var fragmentFunctionName: String { get }
@@ -16,8 +18,10 @@ protocol EVRenderable: AnyObject {
     func render(commandEncoder: MTLRenderCommandEncoder)
 }
 
-extension EVRenderable {
-    var vertexDescriptor: MTLVertexDescriptor {
+@available(iOS 13.0, *)
+@available(macOS 10.15, *)
+public extension EVRenderable {
+    public var vertexDescriptor: MTLVertexDescriptor {
         let vertexDescriptor = MTLVertexDescriptor()
         
         vertexDescriptor.attributes[0].format = .float3
@@ -36,7 +40,7 @@ extension EVRenderable {
         return vertexDescriptor
     }
 
-    func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
+    public func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
         let library = device.makeDefaultLibrary()
         let vertexFunction = library?.makeFunction(name: vertexFunctionName)
         let fragmentFunction = library?.makeFunction(name: fragmentFunctionName)
