@@ -32,7 +32,7 @@ public class EVShape: EVRenderable {
 
     public var pipelineState: MTLRenderPipelineState!
     public let vertexFunctionName: String
-    public let fragmentFunctionName: String
+    public var fragmentFunctionName: String
     public let device: MTLDevice
     public let color: Color
     public let vertices: [EVVertex]
@@ -48,6 +48,10 @@ public class EVShape: EVRenderable {
         self.color = color
         self.texture = texture
         self.device = device
+        
+        if texture != nil && fragmentFunctionName == "ev_fragment_shader" {
+            self.fragmentFunctionName = "ev_textured_fragment_shader"
+        }
         
         let polygon = box.polygon
         self.vertices = [
