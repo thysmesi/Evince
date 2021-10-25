@@ -21,20 +21,23 @@ public class EVShape: EVRenderable {
     public var scale = SIMD2<Float>(repeating: 1)
     
     var transformations: EVTransformations {
-        let translation = matrix_float3x3(rows: [
-            [1, 0, position.x],
-            [0, 1, position.y],
-            [0, 0, 1]
+        let translation = matrix_float4x4(rows: [
+            [1, 0, position.x,0],
+            [0, 1, position.y,0],
+            [0, 0, 1,0],
+            [0,0,0,1]
         ])
-        let rotation = matrix_float3x3(rows: [
+        let rotation = matrix_float4x4(rows: [
             [cos(self.rotation),-sin(self.rotation), 0],
             [sin(self.rotation), cos(self.rotation), 0],
-            [0, 0, 1]
+            [0, 0, 1,0],
+            [0,0,0,1]
         ])
-        let scale = matrix_float3x3(rows: [
-            [self.scale.x, 0, 0],
-            [0, self.scale.y, 0],
-            [0, 0, 1]
+        let scale = matrix_float4x4(rows: [
+            [self.scale.x, 0, 0,0],
+            [0, self.scale.y, 0,0],
+            [0, 0, 1,0],
+            [0,0,0,1]
         ])
         let matrix = matrix_multiply(scale, matrix_multiply(translation, rotation))
         return EVTransformations(matrix: matrix)
