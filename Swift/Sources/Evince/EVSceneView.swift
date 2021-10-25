@@ -11,13 +11,11 @@ import Surrow
 
 @available(iOS 14.0, *)
 public struct EVSceneView: View {
-//    let scene: EVScene
     public let mtkView = MTKView(frame: UIScreen.main.bounds, device: MTLCreateSystemDefaultDevice()!)
     public let renderer: EVRenderer
     
     public init(scene: EVScene) {
         self.renderer = EVRenderer(device: MTLCreateSystemDefaultDevice()!)
-        scene.children.append(EVShape(Box(position: Point(100, 100), size: Size(100, 100)), color: Color.red, device: renderer.device))
         self.renderer.scene = scene
         mtkView.delegate = self.renderer
     }
