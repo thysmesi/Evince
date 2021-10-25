@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Surrow
-import simd
+import MetalKit
 
 @available(iOS 14.0, *)
 public class EVShape: EVRenderable {
@@ -35,23 +35,27 @@ public class EVShape: EVRenderable {
     public var fragmentFunctionName: String
     public let device: MTLDevice
     public let color: Color
-    public let vertices: [EVVertex]
-    public let indices: [UInt16]
-    public let texture: MTLTexture?
+    public var vertices: [EVVertex] = []
+    public var indices: [UInt16] = []
+    public var texture: MTLTexture?
     
     public var vertexBuffer: MTLBuffer?
     public var indexBuffer: MTLBuffer?
-    
-    public init(_ box: Box, color: Color = .gray, device: MTLDevice, texture: MTLTexture? = nil, vertexFunctionName: String = "ev_vertex_shader", fragmentFunctionName: String = "ev_fragment_shader") {
+        
+    public init(_ box: Box, color: Color = .gray, device: MTLDevice, textureName: String? = nil, vertexFunctionName: String = "ev_vertex_shader", fragmentFunctionName: String = "ev_fragment_shader") {
         self.vertexFunctionName = vertexFunctionName
         self.fragmentFunctionName = fragmentFunctionName
         self.color = color
-        self.texture = texture
+//        self.texture = texture
         self.device = device
         
-        if texture != nil && fragmentFunctionName == "ev_fragment_shader" {
+        if let path = textureName {
+            setTexture(imageName: path)
             self.fragmentFunctionName = "ev_textured_fragment_shader"
         }
+//        if path = != nil && fragmentFunctionName == "ev_fragment_shader" {
+//            self.fragmentFunctionName = "ev_textured_fragment_shader"
+//        }
         
         let polygon = box.polygon
         self.vertices = [
@@ -68,6 +72,26 @@ public class EVShape: EVRenderable {
         self.pipelineState = buildPipelineState(device: device)
         
         buildBuffers(device: device)
+    }
+    
+    func setTexture(imageName: String) {
+        let textureLoader = MTKTextureLoader(device: device)
+        
+        var texture: MTLTexture? = nil
+        
+        let textureLoaderOptions: [MTKTextureLoader.Option : Any]
+        let origin = NSString(string: MTKTextureLoader.Origin.bottomLeft.rawValue)
+        textureLoaderOptions = [MTKTextureLoader.Option.origin : origin]
+        
+        if let textureURL = Bundle.main.url(forResource: imageName, withExtension: nil) {
+            do {
+                texture = try textureLoader.newTexture(URL: textureURL, options: textureLoaderOptions)
+            } catch {
+                print("texture not created")
+            }
+        }
+        
+        self.texture = texture
     }
     
     private func buildBuffers(device: MTLDevice) {
