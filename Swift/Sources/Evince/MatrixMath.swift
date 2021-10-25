@@ -45,7 +45,7 @@ public extension Float {
   }
 }
 
-extension matrix_float4x4 {
+public extension matrix_float4x4 {
   init(translationX x: Float, y: Float, z: Float) {
       self.init()
       columns = (
