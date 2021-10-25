@@ -38,14 +38,14 @@ public class EVShape: EVRenderable {
             [0,0,0,1]
         ])
         var a = matrix_multiply(matrix_float4x4(rows: [
-            [1, 0, 0,1],
-            [0, 1, 0,1],
+            [1, 0, 0,-1],
+            [0, 1, 0,-1],
             [0, 0, 1,0],
             [0,0,0,1]
         ]), rotation)
         var b = matrix_multiply(a, matrix_float4x4(rows: [
-            [1, 0, 0,-1],
-            [0, 1, 0,-1],
+            [1, 0, 0,1],
+            [0, 1, 0,1],
             [0, 0, 1,0],
             [0,0,0,1]
         ]))
