@@ -41,19 +41,19 @@ public class EVShape: EVRenderable {
         let center = Self.absToRel(of: polygon.center)
         let screen = Size(UIScreen.main.bounds.size)
 
-        var a = matrix_multiply(rotation, matrix_float4x4(rows: [
-            [screen.width > screen.height ? 1 * Float(screen.min / screen.max) : 1, 0, 0,0],
-            [0, screen.width < screen.height ? 1 / Float(screen.min / screen.max) : 1, 0,0],
-            [0, 0, 1,0],
-            [0,0,0,1]
-        ]))
+//        var a = matrix_multiply(rotation, matrix_float4x4(rows: [
+//            [screen.width > screen.height ? 1 * Float(screen.min / screen.max) : 1, 0, 0,0],
+//            [0, screen.width < screen.height ? 1 / Float(screen.min / screen.max) : 1, 0,0],
+//            [0, 0, 1,0],
+//            [0,0,0,1]
+//        ]))
         var b = matrix_multiply(matrix_float4x4(rows: [
             [1, 0, 0,center.x],
             [0, 1, 0,center.y],
             [0, 0, 1,0],
             [0,0,0,1]
-        ]), a)
-        var c = matrix_multiply(a, matrix_float4x4(rows: [
+        ]), rotation)
+        var c = matrix_multiply(b, matrix_float4x4(rows: [
             [1, 0, 0,-center.x],
             [0, 1, 0,-center.y],
             [0, 0, 1,0],
