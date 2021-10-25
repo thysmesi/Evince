@@ -7,9 +7,6 @@
 
 import Metal
 
-@available(iOS 13.0, *)
-@available(macOS 10.15, *)
-
 @available(iOS 14.0, *)
 public class EVScene {
     public var device: MTLDevice
