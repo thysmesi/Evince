@@ -51,14 +51,21 @@ public class EVShape: EVRenderable {
             [0, 0, 1,0],
             [0,0,0,1]
         ]))
+        let screen = Size(UIScreen.main.bounds.size)
+
+        var c = matrix_multiply(matrix_float4x4(rows: [
+            [1, 0, 0,0],
+            [0, 1 * Float(screen.min / screen.max), 0,0],
+            [0, 0, 1,0],
+            [0,0,0,1]
+        ]), b)
         
         let scale = matrix_float4x4(rows: [
-            [self.scale.x * Float(UIScreen.main.bounds.width / UIScreen.main.bounds.height), 0, 0,0],
+            [self.scale.x, 0, 0,0],
             [0, self.scale.y, 0,0],
             [0, 0, 1,0],
             [0,0,0,1]
         ])
-//        print(matrix_multiply(SIMD<>, <#T##__y: simd_float2##simd_float2#>))
         let matrix = matrix_multiply(scale, matrix_multiply(translation, b))
         return EVTransformations(matrix: matrix)
     }
