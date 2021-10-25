@@ -21,7 +21,7 @@ public class EVShape: EVRenderable {
     public var scale = SIMD3<Float>(repeating: 1)
     
     var transformations: EVTransformations {
-        var matrix = matrix_float4x4(translationX: position.x, y: position.y, z: position.z)
+        var matrix = matrix_float4x4(translationX: position.x, y: -position.y, z: position.z)
         matrix = matrix.rotatedBy(rotationAngle: rotation.x, x: 1, y: 0, z: 0)
         matrix = matrix.rotatedBy(rotationAngle: rotation.y, x: 0, y: 1, z: 0)
         matrix = matrix.rotatedBy(rotationAngle: rotation.z, x: 0, y: 0, z: 1)
