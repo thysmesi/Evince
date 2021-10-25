@@ -21,7 +21,7 @@ public protocol EVRenderable: AnyObject {
 @available(iOS 13.0, *)
 @available(macOS 10.15, *)
 public extension EVRenderable {
-    public var vertexDescriptor: MTLVertexDescriptor {
+    var vertexDescriptor: MTLVertexDescriptor {
         let vertexDescriptor = MTLVertexDescriptor()
         
         vertexDescriptor.attributes[0].format = .float3
@@ -40,8 +40,8 @@ public extension EVRenderable {
         return vertexDescriptor
     }
 
-    public func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
-        let libraryURL: URL = Bundle.module.url(forResource: "EVShaders", withExtension: "metal")!
+    func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
+        let libraryURL: URL = Bundle.module.url(forResource: "EVShaders", withExtension: "metal", subdirectory: "Metal")!
 //        guard let metalDevice: MTLDevice = MTLCreateSystemDefaultDevice() else { return }
         let library = try? device.makeLibrary(filepath: libraryURL.path)
 //        guard let metalShader: MTLFunction = metalLib.makeFunction(name: "myMetalFunc") else { return }
