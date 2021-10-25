@@ -39,13 +39,19 @@ public class EVShape: EVRenderable {
             [0,0,0,1]
         ])
         let center = Self.absToRel(of: polygon.center)
-        var a = matrix_multiply(matrix_float4x4(rows: [
+        var a = matrix_multiply(rotation, matrix_float4x4(rows: [
+            [screen.width > screen.height ? 1 * Float(screen.min / screen.max) : 1, 0, 0,0],
+            [0, screen.width < screen.height ? 1 / Float(screen.min / screen.max) : 1, 0,0],
+            [0, 0, 1,0],
+            [0,0,0,1]
+        ]))
+        var b = matrix_multiply(matrix_float4x4(rows: [
             [1, 0, 0,center.x],
             [0, 1, 0,center.y],
             [0, 0, 1,0],
             [0,0,0,1]
         ]), rotation)
-        var b = matrix_multiply(a, matrix_float4x4(rows: [
+        var c = matrix_multiply(a, matrix_float4x4(rows: [
             [1, 0, 0,-center.x],
             [0, 1, 0,-center.y],
             [0, 0, 1,0],
@@ -53,12 +59,7 @@ public class EVShape: EVRenderable {
         ]))
         let screen = Size(UIScreen.main.bounds.size)
 
-        var c = matrix_multiply(b, matrix_float4x4(rows: [
-            [screen.width > screen.height ? 1 * Float(screen.min / screen.max) : 1, 0, 0,0],
-            [0, screen.width < screen.height ? 1 / Float(screen.min / screen.max) : 1, 0,0],
-            [0, 0, 1,0],
-            [0,0,0,1]
-        ]))
+
         
         let scale = matrix_float4x4(rows: [
             [self.scale.x, 0, 0,0],
