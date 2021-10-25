@@ -46,16 +46,12 @@ public class EVShape: EVRenderable {
         self.vertexFunctionName = vertexFunctionName
         self.fragmentFunctionName = fragmentFunctionName
         self.color = color
-//        self.texture = texture
         self.device = device
         
         if let path = textureName {
             setTexture(imageName: path)
             self.fragmentFunctionName = "ev_textured_fragment_shader"
         }
-//        if path = != nil && fragmentFunctionName == "ev_fragment_shader" {
-//            self.fragmentFunctionName = "ev_textured_fragment_shader"
-//        }
         
         let polygon = box.polygon
         self.vertices = [
@@ -69,6 +65,33 @@ public class EVShape: EVRenderable {
             2, 3, 0
         ]
         
+        self.pipelineState = buildPipelineState(device: device)
+        
+        buildBuffers(device: device)
+    }
+    public init(_ polygon: Polygon, color: Color = .gray, device: MTLDevice, textureName: String? = nil, vertexFunctionName: String = "ev_vertex_shader", fragmentFunctionName: String = "ev_fragment_shader") {
+        self.vertexFunctionName = vertexFunctionName
+        self.fragmentFunctionName = fragmentFunctionName
+        self.color = color
+        self.device = device
+        
+        if let path = textureName {
+            setTexture(imageName: path)
+            self.fragmentFunctionName = "ev_textured_fragment_shader"
+        }
+        
+        let bounding = polygon.bounding
+        for point in polygon.points {
+            let t = (point - bounding.position) / bounding.size
+            self.vertices.append(EVVertex(position: Self.absToRel(of: point), color: color.simd, texture: SIMD2<Float>(Float(t.x),Float(t.y))))
+        }
+        let triangles = polygon.triangles
+        for triangle in triangles {
+            self.indices.append(UInt16(Int(polygon.points.firstIndex(of: triangle.points[0])!)))
+            self.indices.append(UInt16(Int(polygon.points.firstIndex(of: triangle.points[1])!)))
+            self.indices.append(UInt16(Int(polygon.points.firstIndex(of: triangle.points[2])!)))
+        }
+
         self.pipelineState = buildPipelineState(device: device)
         
         buildBuffers(device: device)
