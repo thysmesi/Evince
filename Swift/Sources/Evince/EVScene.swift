@@ -11,7 +11,7 @@ import Metal
 public class EVScene {
     public var device: MTLDevice
     public var children: [EVShape] = []
-    public var update: ((_ delta: Float) -> Void) = {_ in }
+    public var update: ((_ delta: Float, _ children: [EVShape]) -> Void) = {_,_  in }
 
 //    public func add(shape)
     
@@ -20,7 +20,7 @@ public class EVScene {
     }
     
     public func render(commandEncoder: MTLRenderCommandEncoder, delta: Float) {
-        update(delta)
+        update(delta, children)
         
         for child in children {
             child.render(commandEncoder: commandEncoder)
