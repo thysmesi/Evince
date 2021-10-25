@@ -28,17 +28,23 @@ public class EVShape: EVRenderable {
             [0,0,0,1]
         ])
         
-        let c = cos(self.rotation)
-        let s = sin(self.rotation)
-        let x: Float = -1
-        let y: Float = -1
+//        let c = cos(self.rotation)
+//        let s = sin(
         
-        let rotation = matrix_float4x4(rows: [
-            [x * x + (1 - x * x) * c, x * y * (1 - c) * s, 0,0],
-            [x * y * (1 - c) * s, y * y + (1 - y * y) * c, 0,0],
+        var rotation = matrix_float4x4(rows: [
+            [cos(self.rotation),-sin(self.rotation), 0,0],
+            [sin(self.rotation), cos(self.rotation), 0,0],
             [0, 0, 1,0],
             [0,0,0,1]
         ])
+        var a = matrix_multiply(translation, rotation)
+        var b = matrix_multiply(a, matrix_float4x4(rows: [
+            [1, 0, 0,-position.x],
+            [0, 1, 0,-position.y],
+            [0, 0, 1,0],
+            [0,0,0,1]
+        ]))
+        
         let scale = matrix_float4x4(rows: [
             [self.scale.x, 0, 0,0],
             [0, self.scale.y, 0,0],
@@ -46,7 +52,7 @@ public class EVShape: EVRenderable {
             [0,0,0,1]
         ])
 //        print(matrix_multiply(SIMD<>, <#T##__y: simd_float2##simd_float2#>))
-        let matrix = matrix_multiply(scale, matrix_multiply(translation, rotation))
+        let matrix = matrix_multiply(scale, matrix_multiply(translation, b))
         return EVTransformations(matrix: matrix)
     }
 
