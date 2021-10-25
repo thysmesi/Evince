@@ -16,9 +16,9 @@ public class EVShape: EVRenderable {
         return SIMD3<Float>(Float(relative.x), Float(relative.y), 0)
     }
     
-    var position = SIMD3<Float>(repeating: 0)
-    var rotation = SIMD3<Float>(repeating: 0)
-    var scale = SIMD3<Float>(repeating: 1)
+    public var position = SIMD3<Float>(repeating: 0)
+    public var rotation = SIMD3<Float>(repeating: 0)
+    public var scale = SIMD3<Float>(repeating: 1)
     
     var transformations: EVTransformations {
         var matrix = matrix_float4x4(translationX: position.x, y: position.y, z: position.z)
@@ -30,7 +30,7 @@ public class EVShape: EVRenderable {
         return EVTransformations(matrix: matrix)
     }
 
-    public var pipelineState: MTLRenderPipelineState!
+    var pipelineState: MTLRenderPipelineState!
     public let vertexFunctionName: String
     public let fragmentFunctionName: String
     public let device: MTLDevice
