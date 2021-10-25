@@ -16,6 +16,8 @@ public class EVScene {
     public var children: [EVShape] = []
     public var update: ((_ delta: Float) -> Void) = {_ in }
 
+//    public func add(shape)
+    
     public init(device: MTLDevice) {
         self.device = device
     }
