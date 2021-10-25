@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Surrow
+import simd
 
 @available(iOS 14.0, *)
 public class EVShape: EVRenderable {
@@ -14,8 +15,21 @@ public class EVShape: EVRenderable {
         let relative = point * 2 / Size(UIScreen.main.bounds.size) * Vector(1, -1) + Vector(-1, 1)
         return SIMD3<Float>(Float(relative.x), Float(relative.y), 0)
     }
-
     
+    var position = SIMD3<Float>(repeating: 0)
+    var rotation = SIMD3<Float>(repeating: 0)
+    var scale = SIMD3<Float>(repeating: 1)
+    
+    var transformations: EVTransformations {
+        var matrix = matrix_float4x4(translationX: position.x, y: position.y, z: position.z)
+        matrix = matrix.rotatedBy(rotationAngle: rotation.x, x: 1, y: 0, z: 0)
+        matrix = matrix.rotatedBy(rotationAngle: rotation.y, x: 0, y: 1, z: 0)
+        matrix = matrix.rotatedBy(rotationAngle: rotation.z, x: 0, y: 0, z: 1)
+        
+        matrix = matrix.scaledBy(x: scale.x, y: scale.y, z: scale.z)
+        return EVTransformations(matrix: matrix)
+    }
+
     public var pipelineState: MTLRenderPipelineState!
     public let vertexFunctionName: String
     public let fragmentFunctionName: String
@@ -24,8 +38,6 @@ public class EVShape: EVRenderable {
     public let vertices: [EVVertex]
     public let indices: [UInt16]
     public let texture: MTLTexture?
-    
-    public var transformations = EVTransformations()
     
     public var vertexBuffer: MTLBuffer?
     public var indexBuffer: MTLBuffer?
@@ -69,7 +81,9 @@ public class EVShape: EVRenderable {
         commandEncoder.setRenderPipelineState(pipelineState)
         commandEncoder.setVertexBuffer(vertexBuffer,
                                        offset: 0, index: 0)
-        commandEncoder.setVertexBytes(&transformations,
+        
+        var t = transformations
+        commandEncoder.setVertexBytes(&t,
                                       length: MemoryLayout<EVTransformations>.stride,
                                       index: 1)
         
