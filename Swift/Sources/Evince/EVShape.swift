@@ -16,17 +16,27 @@ public class EVShape: EVRenderable {
         return SIMD3<Float>(Float(relative.x), Float(relative.y), 0)
     }
     
-    public var position = SIMD3<Float>(repeating: 0)
-    public var rotation = SIMD3<Float>(repeating: 0)
-    public var scale = SIMD3<Float>(repeating: 1)
+    public var position = SIMD2<Float>(repeating: 0)
+    public var rotation: Float = 0
+    public var scale = SIMD2<Float>(repeating: 1)
     
     var transformations: EVTransformations {
-        var matrix = matrix_float4x4(translationX: position.x, y: -position.y, z: position.z)
-        matrix = matrix.rotatedBy(rotationAngle: rotation.x, x: 1, y: 0, z: 0)
-        matrix = matrix.rotatedBy(rotationAngle: rotation.y, x: 0, y: 1, z: 0)
-        matrix = matrix.rotatedBy(rotationAngle: rotation.z, x: 0, y: 0, z: 1)
-        
-        matrix = matrix.scaledBy(x: scale.x, y: scale.y, z: scale.z)
+        let translation = matrix_float3x3(rows: [
+            [1, 0, position.x],
+            [0, 1, position.y],
+            [0, 0, 1]
+        ])
+        let rotation = matrix_float3x3(rows: [
+            [cos(self.rotation),-sin(self.rotation), 0],
+            [sin(self.rotation), cos(self.rotation), 0],
+            [0, 0, 1]
+        ])
+        let scale = matrix_float3x3(rows: [
+            [self.scale.x, 0, 0],
+            [0, self.scale.y, 0],
+            [0, 0, 1]
+        ])
+        let matrix = matrix_multiply(scale, matrix_multiply(translation, rotation))
         return EVTransformations(matrix: matrix)
     }
 
