@@ -19,6 +19,11 @@ public struct EVSceneView: View {
         self.renderer.scene = scene
         mtkView.delegate = self.renderer
     }
+    public init(scene: EVScene, renderer: EVRenderer) {
+        self.renderer = renderer
+        self.renderer.scene = scene
+        mtkView.delegate = self.renderer
+    }
     
     public var body: some View {
         MTKViewRepresentable(mtkView: mtkView)
