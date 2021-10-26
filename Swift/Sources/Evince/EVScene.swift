@@ -9,6 +9,8 @@ import Metal
 
 @available(iOS 14.0, *)
 open class EVScene {
+    let id = UUID()
+    
     public var device: MTLDevice
     public var children: [EVShape] = []
     public var update: ((_ delta: Float, _ children: [EVShape]) -> Void) = {_,_  in }
