@@ -8,7 +8,7 @@
 import Metal
 
 @available(iOS 14.0, *)
-public class EVScene {
+open class EVScene {
     public var device: MTLDevice
     public var children: [EVShape] = []
     public var update: ((_ delta: Float, _ children: [EVShape]) -> Void) = {_,_  in }
@@ -19,7 +19,7 @@ public class EVScene {
         self.device = device
     }
     
-    public func render(commandEncoder: MTLRenderCommandEncoder, delta: Float) {
+    open func render(commandEncoder: MTLRenderCommandEncoder, delta: Float) {
         update(delta, children)
         
         for child in children {
