@@ -27,8 +27,9 @@ public class EVRenderer: NSObject {
     
     private func buildSamplerState() {
         let descriptor = MTLSamplerDescriptor()
-        descriptor.minFilter = .linear
-        descriptor.magFilter = .linear
+        descriptor.minFilter = .nearest
+        descriptor.magFilter = .nearest
+//        descriptor.
         samplerState = device.makeSamplerState(descriptor: descriptor)
     }
     private func buildDepthStencilState() {
