@@ -12,7 +12,7 @@ public class EVRenderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
 
-    var scenes: [EVScene] = []
+    var scene: EVScene?
     
     var samplerState: MTLSamplerState?
     var depthStencilState: MTLDepthStencilState?
@@ -53,9 +53,8 @@ extension EVRenderer: MTKViewDelegate {
         commandEncoder.setFragmentSamplerState(samplerState, index: 0)
         commandEncoder.setDepthStencilState(depthStencilState)
         
-        for scene in scenes {
-            scene.render(commandEncoder: commandEncoder, delta: delta)
-        }
+        scene?.render(commandEncoder: commandEncoder, delta: delta)
+        
         commandEncoder.endEncoding()
         commandBuffer.present(drawable)
         commandBuffer.commit()
