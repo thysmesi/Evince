@@ -38,6 +38,7 @@ private struct MTKViewRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> MTKView {
         mtkView.depthStencilPixelFormat = .depth32Float
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+        mtkView.colorPixelFormat = .rgba32Sint
         
         return mtkView
     }
