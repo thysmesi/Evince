@@ -40,8 +40,6 @@ public class EVShape: EVRenderable {
         ])
         let to = Float(screen.min / screen.width)
         let bo = Float(screen.min / screen.height)
-        print(to, 1/to)
-        print(bo, 1/bo)
         let b = matrix_multiply(matrix_float4x4(rows: [
             [to, 0, 0, center.x],
             [0, bo, 0, center.y],
