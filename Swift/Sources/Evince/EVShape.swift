@@ -22,41 +22,35 @@ public class EVShape: EVRenderable {
     public var scale = SIMD2<Float>(repeating: 1)
     
     var transformations: EVTransformations {
+        let center = Self.absToRel(of: polygon.center)
+        let screen = Size(UIScreen.main.bounds.size)
+
         let translation = matrix_float4x4(rows: [
-            [1, 0, 0,position.x],
-            [0, 1, 0,position.y],
+            [1, 0, 0,position.x / Float(screen.width)],
+            [0, 1, 0,-position.y / Float(screen.height)],
             [0, 0, 1,0],
             [0,0,0,1]
         ])
-        
-//        let c = cos(self.rotation)
-//        let s = sin(
-        
-        var rotation = matrix_float4x4(rows: [
+            
+        let rotation = matrix_float4x4(rows: [
             [cos(self.rotation),-sin(self.rotation), 0,0],
             [sin(self.rotation), cos(self.rotation), 0,0],
             [0, 0, 1,0],
             [0,0,0,1]
         ])
-        let center = Self.absToRel(of: polygon.center)
-        let screen = Size(UIScreen.main.bounds.size)
-
-        let aspect = matrix_float4x4(rows: [
-            [1, 0, 0,0],
-            [0, 0.46208530805687204, 0,0],
+        let to = Float(screen.min / screen.width)
+        let bo = Float(screen.min / screen.height)
+        print(to, 1/to)
+        print(bo, 1/bo)
+        let b = matrix_multiply(matrix_float4x4(rows: [
+            [to, 0, 0, center.x],
+            [0, bo, 0, center.y],
             [0, 0, 1,0],
-            [0,0,0,1]
-        ])
-
-        var b = matrix_multiply(matrix_float4x4(rows: [
-            [1, 0, 0,center.x],
-            [0, 1, 0,center.y],
-            [0, 0, 1,0],
-            [0,0,0,1]
+            [0, 0, 0, 1]
         ]), rotation)
-        var c = matrix_multiply(b, matrix_float4x4(rows: [
-            [1, 0, 0,-center.x],
-            [0, 1, 0,-center.y],
+        let c = matrix_multiply(b, matrix_float4x4(rows: [
+            [1 / to, 0, 0,-center.x / to],
+            [0, 1 / bo, 0,-center.y / bo],
             [0, 0, 1,0],
             [0,0,0,1]
         ]))
