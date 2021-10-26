@@ -12,7 +12,7 @@ public class EVRenderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
 
-    var scene: EVScene?
+    public var scene: EVScene?
     
     var samplerState: MTLSamplerState?
     var depthStencilState: MTLDepthStencilState?
