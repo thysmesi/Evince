@@ -16,12 +16,12 @@ public struct EVSceneView: View {
     
     public init(scene: EVScene) {
         self.renderer = EVRenderer(device: MTLCreateSystemDefaultDevice()!)
-        self.renderer.scene = scene
+        self.renderer.scenes.append(scene)
         mtkView.delegate = self.renderer
     }
     public init(scene: EVScene, renderer: EVRenderer) {
         self.renderer = renderer
-        self.renderer.scene = scene
+        self.renderer.scenes.append(scene)
         mtkView.delegate = self.renderer
     }
     
