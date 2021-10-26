@@ -9,7 +9,7 @@ import Metal
 
 @available(iOS 14.0, *)
 open class EVScene {
-    let id = UUID()
+    public let id = UUID()
     
     public var device: MTLDevice
     public var children: [EVShape] = []
