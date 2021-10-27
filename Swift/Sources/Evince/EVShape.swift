@@ -151,7 +151,6 @@ public class EVShape: EVRenderable {
                 print("texture not created")
             }
         }
-        
         self.texture = texture
     }
     
