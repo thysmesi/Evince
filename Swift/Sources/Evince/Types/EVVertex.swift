@@ -8,7 +8,7 @@
 import Foundation
 
 public struct EVVertex {
-    var position: SIMD3<Float>
-    var color: SIMD4<Float>
-    var texture: SIMD2<Float>
+    public var position: SIMD3<Float>
+    public var color: SIMD4<Float>
+    public var texture: SIMD2<Float>
 }
