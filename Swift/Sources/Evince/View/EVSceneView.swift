@@ -46,7 +46,7 @@ public struct MTKViewRepresentable: UIViewRepresentable {
 
     public func makeUIView(context: Context) -> MTKView {
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
-        mtkView.colorPixelFormat = .rgba16Float
+//        mtkView.colorPixelFormat = .rgba16Float
         return mtkView
     }
     
