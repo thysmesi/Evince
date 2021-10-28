@@ -27,7 +27,7 @@ public extension EVRenderable {
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
-        pipelineDescriptor.colorAttachments[0].pixelFormat = .rgba16Float
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm//.rgba16Float
         pipelineDescriptor.vertexDescriptor = vertexDescriptor
 
         let pipelineState: MTLRenderPipelineState
