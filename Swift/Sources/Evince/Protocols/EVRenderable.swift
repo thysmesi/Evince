@@ -17,9 +17,10 @@ public protocol EVRenderable: AnyObject {
     func doRender(commandEncoder: MTLRenderCommandEncoder, transformations: matrix_float4x4)
 }
 
+@available(iOS 10.0, *)
 public extension EVRenderable {
     func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
-        let library = device.makeDefaultLibrary()
+        let library = try? device.makeDefaultLibrary(bundle: Bundle.module) 
         let vertexFunction = library?.makeFunction(name: vertexFunctionName)
         let fragmentFunction = library?.makeFunction(name: fragmentFunctionName)
 
