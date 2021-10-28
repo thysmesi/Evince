@@ -1,60 +1,51 @@
 //
 //  EVRenderer.swift
-//  EvinceTest
+//  EVTesting
 //
-//  Created by Corbin Bigler on 10/23/21.
+//  Created by Corbin Bigler on 10/27/21.
 //
 
 import MetalKit
 
-@available(iOS 14.0, *)
-public class EVRenderer: NSObject {
+class EVRenderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
 
-    public var scene: EVScene?
-    
-    var samplerState: MTLSamplerState?
-    var depthStencilState: MTLDepthStencilState?
+    var scene: EVScene?
 
-    public init(device: MTLDevice) {
+    var samplerState: MTLSamplerState?
+
+    init(device: MTLDevice) {
         self.device = device
         commandQueue = device.makeCommandQueue()!
         super.init()
         buildSamplerState()
-        buildDepthStencilState()
     }
-    
+  
     private func buildSamplerState() {
         let descriptor = MTLSamplerDescriptor()
-        descriptor.minFilter = .nearest
-        descriptor.magFilter = .nearest
-//        descriptor.
+        descriptor.minFilter = .linear
+        descriptor.magFilter = .linear
         samplerState = device.makeSamplerState(descriptor: descriptor)
-    }
-    private func buildDepthStencilState() {
-        let depthStencilDescriptor = MTLDepthStencilDescriptor()
-        depthStencilDescriptor.depthCompareFunction = .less
-        depthStencilDescriptor.isDepthWriteEnabled = true
-        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 }
 
-@available(iOS 14.0, *)
 extension EVRenderer: MTKViewDelegate {
-    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
 
-    public func draw(in view: MTKView) {
-        guard let drawable = view.currentDrawable,
-            let descriptor = view.currentRenderPassDescriptor else { return }
-        let commandBuffer = commandQueue.makeCommandBuffer()!
-        let commandEncoder =
-            commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
-        let delta = 1 / Float(view.preferredFramesPerSecond)
-        commandEncoder.setFragmentSamplerState(samplerState, index: 0)
-        commandEncoder.setDepthStencilState(depthStencilState)
+    func draw(in view: MTKView) {
+        scene?.update()
         
-        scene?.render(commandEncoder: commandEncoder, delta: delta)
+        guard let drawable = view.currentDrawable,
+              let descriptor = view.currentRenderPassDescriptor else { return }
+//        print(view.depthStencilTexture?.pixelFormat)
+//        print(view.colorPixelFormat)
+        let commandBuffer = commandQueue.makeCommandBuffer()!
+        let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
+        
+        commandEncoder.setFragmentSamplerState(samplerState, index: 0)
+        
+        scene?.render(commandEncoder: commandEncoder, parentTransformations: matrix_float4x4(1))
         
         commandEncoder.endEncoding()
         commandBuffer.present(drawable)
