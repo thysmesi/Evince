@@ -10,7 +10,7 @@ import Surrow
 import UIKit
 
 @available(iOS 13.0, *)
-public class EVScene: EVNode {
+open class EVScene: EVNode {
     public var device: MTLDevice
     
     public init(device: MTLDevice) {
