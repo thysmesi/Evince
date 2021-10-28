@@ -8,6 +8,6 @@
 import Foundation
 import simd
 
-struct EVModelConstants{
+public struct EVModelConstants{
     var matrix = matrix_float4x4(1)
 }

@@ -11,23 +11,24 @@ import Surrow
 import UIKit
 import MetalKit
 
-class EVShapeNode: EVNode, EVRenderable {
-    var device: MTLDevice
+@available(iOS 13.0, *)
+public class EVShapeNode: EVNode, EVRenderable {
+    public var device: MTLDevice
     
-    var vertices: [EVVertex] = []
-    var indices: [UInt16] = []
+    public var vertices: [EVVertex] = []
+    public var indices: [UInt16] = []
     
-    var vertexBuffer: MTLBuffer?
-    var indexBuffer: MTLBuffer?
+    public var vertexBuffer: MTLBuffer?
+    public var indexBuffer: MTLBuffer?
     
-    var pipelineState: MTLRenderPipelineState!
+    public var pipelineState: MTLRenderPipelineState!
     
-    var vertexFunctionName: String = "ev_shape_vertex_shader"
-    var fragmentFunctionName: String = "ev_shape_fragment_shader"
+    public var vertexFunctionName: String = "ev_shape_vertex_shader"
+    public var fragmentFunctionName: String = "ev_shape_fragment_shader"
     
-    var texture: MTLTexture?
+    public var texture: MTLTexture?
     
-    var vertexDescriptor: MTLVertexDescriptor {
+    public var vertexDescriptor: MTLVertexDescriptor {
         let vertexDescriptor = MTLVertexDescriptor()
         
         vertexDescriptor.attributes[0].format = .float3
@@ -47,7 +48,7 @@ class EVShapeNode: EVNode, EVRenderable {
         return vertexDescriptor
     }
     
-    init(_ polygon: Polygon, device: MTLDevice, color: HexColor = HexColor(), textureNamed: String? = nil) {
+    public init(_ polygon: Polygon, device: MTLDevice, color: HexColor = HexColor(), textureNamed: String? = nil) {
         self.device = device
         super.init()
         
@@ -57,7 +58,7 @@ class EVShapeNode: EVNode, EVRenderable {
         buildBuffers(device: device)
         pipelineState = buildPipelineState(device: device)
     }
-    init(_ size: Size, device: MTLDevice, color: HexColor = HexColor(), textureNamed: String? = nil) {
+    public init(_ size: Size, device: MTLDevice, color: HexColor = HexColor(), textureNamed: String? = nil) {
         self.device = device
         super.init()
         
@@ -67,7 +68,7 @@ class EVShapeNode: EVNode, EVRenderable {
         buildBuffers(device: device)
         pipelineState = buildPipelineState(device: device)
     }
-    init(_ box: Box, device: MTLDevice, color: HexColor = HexColor(), textureNamed: String? = nil) {
+    public init(_ box: Box, device: MTLDevice, color: HexColor = HexColor(), textureNamed: String? = nil) {
         self.device = device
         super.init()
         
@@ -78,15 +79,14 @@ class EVShapeNode: EVNode, EVRenderable {
         pipelineState = buildPipelineState(device: device)
     }
     
-    func load(texture named: String) {
+    public func load(texture named: String) {
         texture = try? MTKTextureLoader(device: device).newTexture(name: named, scaleFactor: UIScreen.main.scale, bundle: Bundle.main)
         fragmentFunctionName = "ev_textured_fragment_shader"
     }
-    func setupVertices(_ polygon: Polygon, color: HexColor) {
+    public func setupVertices(_ polygon: Polygon, color: HexColor) {
         let scale = Size(UIScreen.main.bounds.size).vector
         func relative(point: Point) -> SIMD3<Float> {
             let relative = point * Vector(1, -1) / (scale/2) + Vector(-1,1)
-//            let relative = point /
             return SIMD3<Float>(Float(relative.x), Float(relative.y), 0)
         }
         
@@ -118,7 +118,7 @@ class EVShapeNode: EVNode, EVRenderable {
                                       options: [])
     }
     
-    func doRender(commandEncoder: MTLRenderCommandEncoder, transformations: matrix_float4x4) {
+    public func doRender(commandEncoder: MTLRenderCommandEncoder, transformations: matrix_float4x4) {
         guard let indexBuffer = indexBuffer else { return }        
         var modelConstants = EVModelConstants(matrix: transformations)
 

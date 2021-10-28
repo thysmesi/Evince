@@ -9,10 +9,11 @@ import Metal
 import Surrow
 import UIKit
 
-class EVScene: EVNode {
-    var device: MTLDevice
+@available(iOS 13.0, *)
+public class EVScene: EVNode {
+    public var device: MTLDevice
     
-    init(device: MTLDevice) {
+    public init(device: MTLDevice) {
       self.device = device
       super.init()
     }

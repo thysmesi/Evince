@@ -23,7 +23,7 @@ let package = Package(
             name: "Evince",
             dependencies: ["Surrow"],
             path: "Swift/Sources/Evince",
-            resources: [.process("Metal/EVShaders.metal")]
+            resources: [.process("Metal/Shader.metal")]
         ),
     ]
 )

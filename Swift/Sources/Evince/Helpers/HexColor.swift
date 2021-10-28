@@ -8,45 +8,47 @@
 import SwiftUI
 import simd
 
-struct HexColor {
-    var red: Double
-    var blue: Double
-    var green: Double
-    var alpha: Double
+
+@available(iOS 13.0, *)
+public struct HexColor {
+    public var red: Double
+    public var blue: Double
+    public var green: Double
+    public var alpha: Double
     
-    var uiColor: UIColor {
+    public var uiColor: UIColor {
         UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
-    var cgColor: CGColor {
+    public var cgColor: CGColor {
         CGColor(red: red, green: green, blue: blue, alpha: alpha)
     }
-    var color: Color {
+    public var color: Color {
         Color(.sRGB, red: red, green: green, blue: blue, opacity: alpha)
     }
-    var hex: String {
+    public var hex: String {
         "#\(String(format:"%02X", Int(red*255)))\(String(format:"%02X", Int(green*255)))\(String(format:"%02X", Int(blue*255)))"
     }
-    var simd4: SIMD4<Float> {
+    public var simd4: SIMD4<Float> {
         SIMD4<Float>(Float(red), Float(green), Float(blue), Float(alpha))
     }
-    var simd3: SIMD3<Float> {
+    public var simd3: SIMD3<Float> {
         SIMD3<Float>(Float(red), Float(green), Float(blue))
     }
     
-    func brightness(scale: Double) -> HexColor {
+    public func brightness(scale: Double) -> HexColor {
         let red = min(1, red * scale)
         let green = min(1, green * scale)
         let blue = min(1, blue * scale)
         return HexColor(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    init(red: Double, green: Double, blue: Double, alpha: Double = 1){
+    public init(red: Double, green: Double, blue: Double, alpha: Double = 1){
         self.red = red
         self.green = green
         self.blue = blue
         self.alpha = alpha
     }
-    init(hex: String) {
+    public init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&int)
@@ -67,7 +69,7 @@ struct HexColor {
         self.blue = Double(b) / 255
         self.alpha = Double(a) / 255
     }
-    init(){
+    public init(){
         self.red = 0.75
         self.green = 0.75
         self.blue = 0.75

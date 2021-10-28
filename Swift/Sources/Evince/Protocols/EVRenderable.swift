@@ -8,7 +8,7 @@
 import Metal
 import simd
 
-protocol EVRenderable: AnyObject {
+public protocol EVRenderable: AnyObject {
     var pipelineState: MTLRenderPipelineState! { get set }
     var vertexFunctionName: String { get }
     var fragmentFunctionName: String { get }
@@ -17,7 +17,7 @@ protocol EVRenderable: AnyObject {
     func doRender(commandEncoder: MTLRenderCommandEncoder, transformations: matrix_float4x4)
 }
 
-extension EVRenderable {
+public extension EVRenderable {
     func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
         let library = device.makeDefaultLibrary()
         let vertexFunction = library?.makeFunction(name: vertexFunctionName)

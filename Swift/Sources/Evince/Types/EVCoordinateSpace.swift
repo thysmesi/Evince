@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum EVCoordinateOrigin {
+public enum EVCoordinateOrigin {
     case center
     case topleft
     case bottomleft

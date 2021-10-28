@@ -7,15 +7,16 @@
 
 import MetalKit
 
-class EVRenderer: NSObject {
-    let device: MTLDevice
-    let commandQueue: MTLCommandQueue
+@available(iOS 13.0, *)
+public class EVRenderer: NSObject {
+    public let device: MTLDevice
+    public let commandQueue: MTLCommandQueue
 
-    var scene: EVScene?
+    public var scene: EVScene?
 
-    var samplerState: MTLSamplerState?
+    public var samplerState: MTLSamplerState?
 
-    init(device: MTLDevice) {
+    public init(device: MTLDevice) {
         self.device = device
         commandQueue = device.makeCommandQueue()!
         super.init()
@@ -30,10 +31,11 @@ class EVRenderer: NSObject {
     }
 }
 
+@available(iOS 13.0, *)
 extension EVRenderer: MTKViewDelegate {
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
+    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
 
-    func draw(in view: MTKView) {
+    public func draw(in view: MTKView) {
         scene?.update()
         
         guard let drawable = view.currentDrawable,

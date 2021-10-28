@@ -10,23 +10,17 @@ import simd
 import Surrow
 import UIKit
 
-class EVNode {
-//    private func mToTL(point: Point){
-//
-//    }
-//    private func tlToM(point: Point){
-//        let screen = Size(UIScreen.main.bounds.size)
-//
-//    }
+
+@available(iOS 13.0, *)
+public class EVNode {
+    public var id = UUID()
+    public var children: [EVNode] = []
     
-    var id = UUID()
-    var children: [EVNode] = []
+    public var position = SIMD2<Float>(repeating: 0)
+    public var scale = SIMD2<Float>(repeating: 1)
+    public var rotation: Float = 0
     
-    var position = SIMD2<Float>(repeating: 0)
-    var scale = SIMD2<Float>(repeating: 1)
-    var rotation: Float = 0
-    
-    var transformations: matrix_float4x4 {
+    public var transformations: matrix_float4x4 {
         let screen = Size(UIScreen.main.bounds.size)
         let radians = rotation * (Float.pi/180)
         
@@ -53,17 +47,17 @@ class EVNode {
         ])
     }
         
-    func add(child node: EVNode) {
+    public func add(child node: EVNode) {
         children.append(node)
     }
-    func remove(child node: EVNode) -> Bool {
+    public func remove(child node: EVNode) -> Bool {
         if let index = children.firstIndex(where: {$0.id == node.id }) {
             children.remove(at: index)
             return true
         }
         return false
     }
-    func remove(child id: UUID) -> Bool {
+    public func remove(child id: UUID) -> Bool {
         if let index = children.firstIndex(where: {$0.id == id }) {
             children.remove(at: index)
             return true
@@ -71,7 +65,7 @@ class EVNode {
         return false
     }
     
-    func render(commandEncoder: MTLRenderCommandEncoder, parentTransformations: matrix_float4x4) {
+    public func render(commandEncoder: MTLRenderCommandEncoder, parentTransformations: matrix_float4x4) {
 //        let transformations = matrix_multiply(parentTransformations, self.transformations)
         
         for child in children {
