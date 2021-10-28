@@ -12,7 +12,8 @@ let package = Package(
             targets: ["Evince"]),
     ],
     dependencies: [
-        .package(name: "Surrow", url: "https://github.com/thysmesi/surrow.git", from: "1.0.0")
+        .package(name: "Surrow", url: "https://github.com/thysmesi/surrow.git", Package.Dependency.Requirement.branchItem("main"))
+//        .package(name: "Surrow", url: "https://github.com/thysmesi/surrow.git", from: "1.0.0")
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
     ],

@@ -5,9 +5,9 @@
         "package": "Surrow",
         "repositoryURL": "https://github.com/thysmesi/surrow.git",
         "state": {
-          "branch": null,
-          "revision": "bfb11c7ffdd29a377ba37b3683c8e731c463554e",
-          "version": "1.0.2"
+          "branch": "main",
+          "revision": "c8ea9a7a764522cf302e0b0a5ddbc76f307aa3cd",
+          "version": null
         }
       }
     ]
