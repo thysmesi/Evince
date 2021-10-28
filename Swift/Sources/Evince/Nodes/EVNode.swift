@@ -33,18 +33,25 @@ open class EVNode {
         let cosr = cos(radians)
         let sinr = sin(radians)
         
+        return matrix_float4x4(rows: [
+            [g, 0, 0, c],
+            [0 ,h, 0, d],
+            [0, 0, 1, 0],
+            [0 ,0, 0, 1]
+        ])
+        
 //        return matrix_float4x4(rows: [
 //            [g*cosr, -(g*t*sinr)/(b), 0, ((h*t*sinr)/(b))+c+(g*cosr)-1],
 //            [(b*g*sinr)/(t), g*cosr, 0, ((b*g*sinr)/(t))+d-(h*cosr)+1],
 //            [0, 0, 1, 0],
 //            [0 ,0, 0, 1]
 //        ])
-        return matrix_float4x4(rows: [
-            [g*sinr, -(g*t*cosr)/(b), 0, ((h*t*cosr)/(b))+c+(g*sinr)-1],
-            [(b*g*cosr)/(t), g*sinr, 0, ((b*g*cosr)/(t))+d-(h*sinr)+1],
-            [0, 0, 1, 0],
-            [0 ,0, 0, 1]
-        ])
+//        return matrix_float4x4(rows: [
+//            [g*sinr, -(g*t*cosr)/(b), 0, ((h*t*cosr)/(b))+c+(g*sinr)-1],
+//            [(b*g*cosr)/(t), g*sinr, 0, ((b*g*cosr)/(t))+d-(h*sinr)+1],
+//            [0, 0, 1, 0],
+//            [0 ,0, 0, 1]
+//        ])
     }
         
     public func add(child node: EVNode) {
