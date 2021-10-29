@@ -35,12 +35,7 @@ open class EVNode {
     
     public var renderPipelineState: MTLRenderPipelineState!
         
-    var modelConstants: EVModelConstants {
-        if _modelConstants == nil {
-            _modelConstants = EVModelConstants(modelMatrix: modelMatrix)
-        }
-        return _modelConstants!
-    }
+    var modelConstants = EVModelConstants()
     private var _modelConstants: EVModelConstants?
     
     var modelMatrix: matrix_float4x4 {
@@ -99,14 +94,13 @@ open class EVNode {
         }
     }
     
-//    private func updateModelConstants(){
-//        modelConstants.modelMatrix = modelMatrix
-//    }
-//
     func render(renderCommandEncoder: MTLRenderCommandEncoder){
-        var temp = modelConstants
+        if _modelConstants == nil {
+            modelConstants.modelMatrix = modelMatrix
+        }
+        
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        renderCommandEncoder.setVertexBytes(&temp, length: EVModelConstants.stride, index: 2)
+        renderCommandEncoder.setVertexBytes(&modelConstants, length: EVModelConstants.stride, index: 2)
         
         if let texture = texture {
             renderCommandEncoder.setFragmentSamplerState(EVEngine.samplerState, index: 0)
