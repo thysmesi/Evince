@@ -36,7 +36,7 @@ open class EVNode {
     public var renderPipelineState: MTLRenderPipelineState!
         
     var modelConstants = EVModelConstants()
-    private var _updateModelConstants: Bool
+    private var _updateModelConstants: Bool = true
     
     var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
