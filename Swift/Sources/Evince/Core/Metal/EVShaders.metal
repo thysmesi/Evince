@@ -9,7 +9,7 @@
 using namespace metal;
 
 struct VertexIn{
-    float3 position [[ attribute(0) ]];
+    float2 position [[ attribute(0) ]];
     float4 color [[ attribute(1) ]];
     float2 textureCoordinate [[ attribute(2) ]];
 };
@@ -33,7 +33,7 @@ vertex RasterizerData basic_vertex_shader(const VertexIn vIn [[ stage_in ]],
                                           constant ModelConstants &modelConstants [[ buffer(1) ]]){
     RasterizerData rd;
     
-    rd.position = modelConstants.modelMatrix * float4(vIn.position, 1);
+    rd.position = modelConstants.modelMatrix * float4(vIn.position, 0, 1);
     rd.color = vIn.color;
     rd.textureCoordinate = vIn.textureCoordinate;
     

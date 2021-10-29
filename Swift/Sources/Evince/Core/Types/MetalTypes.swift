@@ -26,11 +26,11 @@ extension SIMD3: sizeable { }
 extension SIMD4: sizeable { }
 
 public struct EVVertex: sizeable{
-    var position: SIMD3<Float>
+    var position: SIMD2<Float>
     var color: SIMD4<Float>
     var textureCoordinate: SIMD2<Float>
     
-    public init(position: SIMD3<Float>, color: SIMD4<Float>, textureCoordinate: SIMD2<Float>) {
+    public init(position: SIMD2<Float>, color: SIMD4<Float>, textureCoordinate: SIMD2<Float>) {
         self.position = position
         self.color = color
         self.textureCoordinate = textureCoordinate
