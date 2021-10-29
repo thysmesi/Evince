@@ -39,8 +39,8 @@ public class EVEngine{
         
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
-        renderPipelineDescriptor.vertexFunction = shaders[.vertexBasic]
-        renderPipelineDescriptor.fragmentFunction = shaders[.fragmentBasic]
+        renderPipelineDescriptor.vertexFunction = shaders["basic_vertex_shader"]
+        renderPipelineDescriptor.fragmentFunction = shaders["basic_fragment_shader"]
         renderPipelineDescriptor.vertexDescriptor = vertexDescriptor
         return renderPipelineDescriptor
     }()

@@ -7,5 +7,8 @@ public class EVShader {
         self.function = EVEngine.defaultLibrary.makeFunction(name: functionName)
         self.function.label = name
     }
-    
+    public init(name: String, functionName: String, library: MTLLibrary) {
+        self.function = library.makeFunction(name: functionName)
+        self.function.label = name
+    }
 }

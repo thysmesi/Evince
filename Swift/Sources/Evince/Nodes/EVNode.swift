@@ -64,7 +64,7 @@ open class EVNode {
     
     public var texture: MTLTexture?
     
-    public init(vertexShader: ShaderTypes? = nil, fragmentShader: ShaderTypes? = nil){
+    public init(vertexShader: String? = nil, fragmentShader: String? = nil){
         buildVertices()
         buildBuffers()
         
@@ -72,8 +72,8 @@ open class EVNode {
             let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
             
             renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-            renderPipelineDescriptor.vertexFunction = EVEngine.shaders[vertexShader ?? .vertexBasic]
-            renderPipelineDescriptor.fragmentFunction = EVEngine.shaders[fragmentShader ?? .fragmentBasic]
+            renderPipelineDescriptor.vertexFunction = EVEngine.shaders[vertexShader ?? "basic_vertex_shader"]
+            renderPipelineDescriptor.fragmentFunction = EVEngine.shaders[fragmentShader ?? "basic_fragment_shader"]
             renderPipelineDescriptor.vertexDescriptor = EVEngine.vertexDescriptor
             
             renderPipelineState = try! EVEngine.device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)

@@ -7,12 +7,6 @@
 
 import Metal
 
-public enum ShaderTypes {
-    case vertexBasic
-    case fragmentBasic
-    case fragmentTextured
-}
-
 @available(iOS 13.0, *)
 public class EVShaderLibrary {
     
@@ -21,22 +15,20 @@ public class EVShaderLibrary {
         fillLibrary()
     }
     
-    private var _library: [ShaderTypes: EVShader] = [:]
+    private var _library: [String: MTLFunction] = [:]
     
     public func fillLibrary() {
-        _library.updateValue(EVShader(name: "Basic Vertex Shader",
-                                         functionName: "basic_vertex_shader"),
-                                  forKey: .vertexBasic)
-        _library.updateValue(EVShader(name: "Basic Fragment Shader",
-                                         functionName: "basic_fragment_shader"),
-                                  forKey: .fragmentBasic)
-        _library.updateValue(EVShader(name: "Textured Fragment Shader",
-                                         functionName: "textured_fragment_shader"),
-                                  forKey: .fragmentTextured)
+        _library.updateValue(EVEngine.defaultLibrary.makeFunction(name: "basic_vertex_shader")!, forKey: "basic_vertex_shader")
+        _library.updateValue(EVEngine.defaultLibrary.makeFunction(name: "basic_fragment_shader")!, forKey: "basic_fragment_shader")
+        _library.updateValue(EVEngine.defaultLibrary.makeFunction(name: "textured_fragment_shader")!, forKey: "textured_fragment_shader")
     }
     
-    public subscript(_ type: ShaderTypes) -> MTLFunction {
-        return (_library[type]?.function)!
+    public func addShader(name: String, library: MTLLibrary = EVEngine.defaultLibrary) {
+        _library.updateValue(library.makeFunction(name: name)!, forKey: name)
+    }
+    
+    public subscript(_ type: String) -> MTLFunction {
+        return _library[type]!
     }
 
 }
