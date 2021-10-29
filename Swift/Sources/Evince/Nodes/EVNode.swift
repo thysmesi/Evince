@@ -31,7 +31,7 @@ open class EVNode {
         
         let translation = matrix_float4x4(rows: [
             [1, 0, 0, position.x - Float(screen.width/2)],
-            [0, 1, 0, -position.y + Float(screen.height/2)],
+            [0, 1, 0, position.y + Float(screen.height/2)],
             [0, 0, 1, 0],
             [0, 0, 0, 1]
         ])
