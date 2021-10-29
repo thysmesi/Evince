@@ -84,7 +84,7 @@ open class EVNode {
                                                     options: [])
         if let indices = indices {
             indexBuffer = EVEngine.device.makeBuffer(bytes: indices,
-                                                        length: UInt16.size(vertices.count),
+                                                        length: UInt16.stride(vertices.count),
                                                         options: [])
         }
     }
@@ -107,6 +107,8 @@ open class EVNode {
         renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0,
                                              index: 0)
         if let indexBuffer = indexBuffer, let indices = indices {
+            print(indices.count)
+            print(vertices.count)
             renderCommandEncoder.drawIndexedPrimitives(type: .triangle,
                                                  indexCount: indices.count,
                                                  indexType: .uint16,
