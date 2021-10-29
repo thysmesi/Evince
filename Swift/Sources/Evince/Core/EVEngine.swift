@@ -38,6 +38,8 @@ public class EVEngine{
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
+//        renderPipelineDescriptor.te
         renderPipelineDescriptor.vertexFunction = shaders[.vertexBasic]
         renderPipelineDescriptor.fragmentFunction = shaders[.fragmentBasic]
         renderPipelineDescriptor.vertexDescriptor = vertexDescriptor
