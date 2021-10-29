@@ -15,8 +15,8 @@ open class EVNode {
     public var scale = SIMD2<Float>(1,1)
     public var rotation: Float = 0//SIMD3<Float>(0,0,0)
     
-    var vertices: [EVVertex] = []
-    var indices: [UInt16]?
+    public var vertices: [EVVertex] = []
+    public var indices: [UInt16]?
     
     var vertexBuffer: MTLBuffer!
     var indexBuffer: MTLBuffer?

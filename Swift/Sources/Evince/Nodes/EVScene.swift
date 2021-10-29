@@ -11,6 +11,8 @@ import Metal
 open class EVScene {
     public var nodes: [EVNode] = []
     
+    public init(){}
+    
     func render(renderCommandEncoder: MTLRenderCommandEncoder, deltaTime: Float) {
         update(deltaTime: deltaTime)
         
