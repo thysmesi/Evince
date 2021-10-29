@@ -2,21 +2,26 @@
 //  EVScene.swift
 //  EVTesting
 //
-//  Created by Corbin Bigler on 10/27/21.
+//  Created by Corbin Bigler on 10/29/21.
 //
 
 import Metal
-import Surrow
-import UIKit
 
 @available(iOS 13.0, *)
-open class EVScene: EVNode {
-    public var device: MTLDevice
+open class EVScene {
+    public var nodes: [EVNode] = []
     
-    public init(device: MTLDevice) {
-      self.device = device
-      super.init()
+    func render(renderCommandEncoder: MTLRenderCommandEncoder, deltaTime: Float) {
+        update(deltaTime: deltaTime)
+        
+        for node in nodes {
+            node.render(renderCommandEncoder: renderCommandEncoder)
+        }
     }
-
-    open func update() {}
+    
+    public func add(node: EVNode) {
+        nodes.append(node)
+    }
+    
+    open func update(deltaTime: Float) {}
 }

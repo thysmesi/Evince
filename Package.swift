@@ -12,7 +12,7 @@ let package = Package(
             targets: ["Evince"]),
     ],
     dependencies: [
-        .package(name: "Surrow", url: "https://github.com/thysmesi/surrow.git", Package.Dependency.Requirement.branchItem("main"))
+//        .package(name: "Surrow", url: "https://github.com/thysmesi/surrow.git", Package.Dependency.Requirement.branchItem("main"))
 //        .package(name: "Surrow", url: "https://github.com/thysmesi/surrow.git", from: "1.0.0")
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
@@ -22,9 +22,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "Evince",
-            dependencies: ["Surrow"],
             path: "Swift/Sources/Evince",
-            resources: [.process("Metal/Shader.metal")]
+            resources: [.process("Core/Metal/EVShaders.metal")]
         ),
     ]
 )
