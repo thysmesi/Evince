@@ -31,7 +31,7 @@ public struct EVVertex: sizeable{
     public var textureCoordinate: SIMD2<Float>
     
     public init(position: SIMD3<Float>, color: SIMD4<Float>, textureCoordinate: SIMD2<Float>) {
-        self.position = position
+        self.position = SIMD3<Float>(position.x, -position.y, 0)
         self.color = color
         self.textureCoordinate = textureCoordinate
     }

@@ -49,7 +49,7 @@ open class EVNode {
         ])
         let standardize = matrix_float4x4(rows: [
             [1 / Float(screen.width/2), 0, 0, 0],
-            [0, -1 / Float(screen.height/2), 0, 0],
+            [0, 1 / Float(screen.height/2), 0, 0],
             [0, 0, 1, 0],
             [0, 0, 0, 1]
         ])
