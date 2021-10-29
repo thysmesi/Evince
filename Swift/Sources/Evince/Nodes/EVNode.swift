@@ -59,7 +59,7 @@ open class EVNode {
     
     public var texture: MTLTexture?
     
-    init(vertexShader: ShaderTypes? = nil, fragmentShader: ShaderTypes? = nil){
+    public init(vertexShader: ShaderTypes? = nil, fragmentShader: ShaderTypes? = nil){
         buildVertices()
         buildBuffers()
         
