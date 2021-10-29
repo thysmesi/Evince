@@ -11,9 +11,21 @@ import UIKit
 
 @available(iOS 13.0, *)
 open class EVNode {
-    public var position = SIMD2<Float>(0,0)
-    public var scale = SIMD2<Float>(1,1)
-    public var rotation: Float = 0
+    public var position = SIMD2<Float>(0,0) {
+        didSet {
+            _modelConstants = nil
+        }
+    }
+    public var scale = SIMD2<Float>(1,1) {
+        didSet {
+            _modelConstants = nil
+        }
+    }
+    public var rotation: Float = 0 {
+        didSet {
+            _modelConstants = nil
+        }
+    }
     
     public var vertices: [EVVertex] = []
     public var indices: [UInt16]?
@@ -23,11 +35,16 @@ open class EVNode {
     
     public var renderPipelineState: MTLRenderPipelineState!
         
-    var modelConstants = EVModelConstants()
+    var modelConstants: EVModelConstants {
+        if _modelConstants == nil {
+            _modelConstants = EVModelConstants(modelMatrix: modelMatrix)
+        }
+        return _modelConstants!
+    }
+    private var _modelConstants: EVModelConstants?
     
     var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
-        let screen = UIScreen.main.bounds.size
         
         let translation = matrix_float4x4(rows: [
             [1, 0, 0, position.x],
@@ -47,16 +64,7 @@ open class EVNode {
             [0, 0, 1, 0],
             [0, 0, 0, 1]
         ])
-//        let standardize = matrix_float4x4(rows: [
-//            [1 / Float(screen.width/2), 0, 0, 0],
-//            [0, 1 / Float(screen.height/2), 0, 0],
-//            [0, 0, 1, 0],
-//            [0, 0, 0, 1]
-//        ])
-        
-//        return standardize * ((translation * rotation) * scale)
         return ((translation * rotation) * scale)
-
     }
     
     public var texture: MTLTexture?
@@ -91,15 +99,14 @@ open class EVNode {
         }
     }
     
-    private func updateModelConstants(){
-        modelConstants.modelMatrix = modelMatrix
-    }
-    
+//    private func updateModelConstants(){
+//        modelConstants.modelMatrix = modelMatrix
+//    }
+//
     func render(renderCommandEncoder: MTLRenderCommandEncoder){
-        updateModelConstants()
-        
+        var temp = modelConstants
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        renderCommandEncoder.setVertexBytes(&modelConstants, length: EVModelConstants.stride, index: 2)
+        renderCommandEncoder.setVertexBytes(&temp, length: EVModelConstants.stride, index: 2)
         
         if let texture = texture {
             renderCommandEncoder.setFragmentSamplerState(EVEngine.samplerState, index: 0)
