@@ -11,7 +11,7 @@ import MetalKit
 public class EVEngine{
     public static let device = MTLCreateSystemDefaultDevice()!
     public static let commandQueue = device.makeCommandQueue()!
-    public static let defaultLibrary = device.makeDefaultLibrary()!
+    public static let defaultLibrary = (try? device.makeDefaultLibrary(bundle: Bundle.module)) ?? device.makeDefaultLibrary()!
     public static let shaders = EVShaderLibrary()
     public static let vertexDescriptor = { () -> MTLVertexDescriptor in
         let vertexDescriptor = MTLVertexDescriptor()

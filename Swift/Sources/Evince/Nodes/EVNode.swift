@@ -13,7 +13,7 @@ import UIKit
 open class EVNode {
     public var position = SIMD2<Float>(0,0)
     public var scale = SIMD2<Float>(1,1)
-    public var rotation: Float = 0//SIMD3<Float>(0,0,0)
+    public var rotation: Float = 0
     
     public var vertices: [EVVertex] = []
     public var indices: [UInt16]?
