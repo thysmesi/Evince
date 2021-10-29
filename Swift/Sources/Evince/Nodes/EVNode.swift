@@ -47,14 +47,16 @@ open class EVNode {
             [0, 0, 1, 0],
             [0, 0, 0, 1]
         ])
-        let standardize = matrix_float4x4(rows: [
-            [1 / Float(screen.width/2), 0, 0, 0],
-            [0, 1 / Float(screen.height/2), 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1]
-        ])
+//        let standardize = matrix_float4x4(rows: [
+//            [1 / Float(screen.width/2), 0, 0, 0],
+//            [0, 1 / Float(screen.height/2), 0, 0],
+//            [0, 0, 1, 0],
+//            [0, 0, 0, 1]
+//        ])
         
-        return standardize * ((translation * rotation) * scale)
+//        return standardize * ((translation * rotation) * scale)
+        return ((translation * rotation) * scale)
+
     }
     
     public var texture: MTLTexture?
