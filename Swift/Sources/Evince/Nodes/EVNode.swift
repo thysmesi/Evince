@@ -30,8 +30,8 @@ open class EVNode {
         let screen = UIScreen.main.bounds.size
         
         let translation = matrix_float4x4(rows: [
-            [1, 0, 0, position.x - Float(screen.width/2)],
-            [0, 1, 0, -position.y + Float(screen.height/2)],
+            [1, 0, 0, position.x],
+            [0, 1, 0, -position.y],
             [0, 0, 1, 0],
             [0, 0, 0, 1]
         ])
