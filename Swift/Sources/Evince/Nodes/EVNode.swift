@@ -21,7 +21,7 @@ open class EVNode {
     var vertexBuffer: MTLBuffer!
     var indexBuffer: MTLBuffer?
     
-    var renderPipelineState: MTLRenderPipelineState!
+    public var renderPipelineState: MTLRenderPipelineState!
     
     var modelConstants = EVModelConstants()
     
@@ -78,7 +78,7 @@ open class EVNode {
     }
 
     open func buildVertices() {}
-    final func buildBuffers(){
+    public final func buildBuffers(){
         vertexBuffer = EVEngine.device.makeBuffer(bytes: vertices,
                                                     length: EVVertex.stride(vertices.count),
                                                     options: [])
