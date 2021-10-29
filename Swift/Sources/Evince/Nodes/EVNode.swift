@@ -13,17 +13,17 @@ import UIKit
 open class EVNode {
     public var position = SIMD2<Float>(0,0) {
         didSet {
-            _modelConstants = nil
+            _updateModelConstants = true
         }
     }
     public var scale = SIMD2<Float>(1,1) {
         didSet {
-            _modelConstants = nil
+            _updateModelConstants = true
         }
     }
     public var rotation: Float = 0 {
         didSet {
-            _modelConstants = nil
+            _updateModelConstants = true
         }
     }
     
@@ -36,7 +36,7 @@ open class EVNode {
     public var renderPipelineState: MTLRenderPipelineState!
         
     var modelConstants = EVModelConstants()
-    private var _modelConstants: EVModelConstants?
+    private var _updateModelConstants: Bool
     
     var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
@@ -95,8 +95,9 @@ open class EVNode {
     }
     
     func render(renderCommandEncoder: MTLRenderCommandEncoder){
-        if _modelConstants == nil {
+        if _updateModelConstants {
             modelConstants.modelMatrix = modelMatrix
+            _updateModelConstants = false
         }
         
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
