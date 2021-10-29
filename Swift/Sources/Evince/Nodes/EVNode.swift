@@ -31,7 +31,7 @@ open class EVNode {
         
         let translation = matrix_float4x4(rows: [
             [1, 0, 0, position.x - Float(screen.width/2)],
-            [0, 1, 0, position.y + Float(screen.height/2)],
+            [0, 1, 0, -position.y + Float(screen.height/2)],
             [0, 0, 1, 0],
             [0, 0, 0, 1]
         ])
@@ -49,7 +49,7 @@ open class EVNode {
         ])
         let standardize = matrix_float4x4(rows: [
             [1 / Float(screen.width/2), 0, 0, 0],
-            [0, 1 / Float(screen.height/2), 0, 0],
+            [0, -1 / Float(screen.height/2), 0, 0],
             [0, 0, 1, 0],
             [0, 0, 0, 1]
         ])
@@ -84,7 +84,7 @@ open class EVNode {
                                                     options: [])
         if let indices = indices {
             indexBuffer = EVEngine.device.makeBuffer(bytes: indices,
-                                                        length: UInt16.stride(vertices.count),
+                                                        length: UInt16.size(vertices.count),
                                                         options: [])
         }
     }
