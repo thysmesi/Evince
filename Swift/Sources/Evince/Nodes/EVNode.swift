@@ -22,7 +22,7 @@ open class EVNode {
     var indexBuffer: MTLBuffer?
     
     public var renderPipelineState: MTLRenderPipelineState!
-    
+        
     var modelConstants = EVModelConstants()
     
     var modelMatrix: matrix_float4x4 {
@@ -97,7 +97,7 @@ open class EVNode {
         updateModelConstants()
         
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        renderCommandEncoder.setVertexBytes(&modelConstants, length: EVModelConstants.stride, index: 1)
+        renderCommandEncoder.setVertexBytes(&modelConstants, length: EVModelConstants.stride, index: 2)
         
         if let texture = texture {
             renderCommandEncoder.setFragmentSamplerState(EVEngine.samplerState, index: 0)
