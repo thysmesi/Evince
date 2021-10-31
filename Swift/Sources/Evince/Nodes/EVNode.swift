@@ -59,4 +59,8 @@ open class EVNode {
               renderable.doRender(renderCommandEncoder: renderCommandEncoder, modelViewMatrix: modelViewMatrix)
           }
     }
+    
+    public func add(child: EVNode) {
+        children.append(child)
+    }
 }

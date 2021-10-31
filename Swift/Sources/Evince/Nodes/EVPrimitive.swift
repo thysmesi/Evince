@@ -80,8 +80,4 @@ open class EVPrimitive: EVNode, EVRenderable {
                                                 vertexCount: vertices.count)
         }
     }
-    
-    public func add(child: EVNode) {
-        children.append(child)
-    }
 }
