@@ -11,6 +11,8 @@ import UIKit
 
 @available(iOS 13.0, *)
 open class EVNode {
+    public let id: UUID
+    
     public var position = SIMD2<Float>(0,0) {
         didSet {
             _updateModelConstants = true
@@ -64,7 +66,9 @@ open class EVNode {
     
     public var texture: MTLTexture?
     
-    public init(vertexShader: String? = nil, fragmentShader: String? = nil){
+    public init(id: UUID = UUID(), vertexShader: String? = nil, fragmentShader: String? = nil){
+        self.id = id
+        
         buildVertices()
         buildBuffers()
         
