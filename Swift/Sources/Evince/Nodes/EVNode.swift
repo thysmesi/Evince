@@ -13,21 +13,9 @@ import UIKit
 open class EVNode {
     public let id: UUID
     
-    public var position = SIMD2<Float>(0,0) {
-        didSet {
-            _updateModelConstants = true
-        }
-    }
-    public var scale = SIMD2<Float>(1,1) {
-        didSet {
-            _updateModelConstants = true
-        }
-    }
-    public var rotation: Float = 0 {
-        didSet {
-            _updateModelConstants = true
-        }
-    }
+    public var position = SIMD2<Float>(0,0)
+    public var scale = SIMD2<Float>(1,1)
+    public var rotation: Float = 0
     
     public var vertices: [EVVertex] = []
     public var indices: [UInt16]?
@@ -40,9 +28,9 @@ open class EVNode {
     public var renderPipelineState: MTLRenderPipelineState!
         
     var modelConstants = EVModelConstants()
-    private var _updateModelConstants: Bool = true
+//    private var _updateModelConstants: Bool = true
     
-    var modelMatrix: matrix_float4x4 {
+    public var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
         
         let translation = matrix_float4x4(rows: [
