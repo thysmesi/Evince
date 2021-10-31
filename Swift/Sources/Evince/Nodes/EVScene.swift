@@ -19,7 +19,7 @@ open class EVScene {
     
     public init(){}
     
-    var sceneConstants = EVModelConstants()
+//    var sceneConstants = EVModelConstants()
     
     var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
@@ -55,12 +55,11 @@ open class EVScene {
     
     func render(renderCommandEncoder: MTLRenderCommandEncoder, deltaTime: Float) {
         update(deltaTime: deltaTime)
-        sceneConstants.modelMatrix = modelMatrix
         
-        renderCommandEncoder.setVertexBytes(&sceneConstants, length: EVModelConstants.stride, index: 1)
+//        renderCommandEncoder.setVertexBytes(&sceneConstants, length: EVModelConstants.stride, index: 1)
 
         for node in nodes {
-            node.render(renderCommandEncoder: renderCommandEncoder)
+            node.render(renderCommandEncoder: renderCommandEncoder, parentModelMatrix: modelMatrix)
         }
     }
     

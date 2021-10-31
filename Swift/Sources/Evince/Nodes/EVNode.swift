@@ -31,6 +31,8 @@ open class EVNode {
     
     public var vertices: [EVVertex] = []
     public var indices: [UInt16]?
+
+    public var children: [EVNode] = []
     
     var vertexBuffer: MTLBuffer!
     var indexBuffer: MTLBuffer?
@@ -98,14 +100,16 @@ open class EVNode {
         }
     }
     
-    func render(renderCommandEncoder: MTLRenderCommandEncoder){
-        if _updateModelConstants {
-            modelConstants.modelMatrix = modelMatrix
-            _updateModelConstants = false
+    func render(renderCommandEncoder: MTLRenderCommandEncoder, parentModelMatrix: float4x4
+    ){
+        var modelConstants = EVModelConstants(modelMatrix: modelMatrix * parentModelMatrix)
+        
+        for node in children {
+            node.render(renderCommandEncoder: renderCommandEncoder, parentModelMatrix: modelConstants.modelMatrix)
         }
         
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        renderCommandEncoder.setVertexBytes(&modelConstants, length: EVModelConstants.stride, index: 2)
+        renderCommandEncoder.setVertexBytes(&modelConstants, length: EVModelConstants.stride, index: 1)
         
         if let texture = texture {
             renderCommandEncoder.setFragmentSamplerState(EVEngine.samplerState, index: 0)
