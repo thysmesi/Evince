@@ -30,7 +30,7 @@ open class EVNode {
     var modelConstants = EVModelConstants()
 //    private var _updateModelConstants: Bool = true
     
-    public var modelMatrix: matrix_float4x4 {
+    open var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
         
         let translation = matrix_float4x4(rows: [
