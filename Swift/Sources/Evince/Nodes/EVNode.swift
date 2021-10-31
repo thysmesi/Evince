@@ -17,18 +17,9 @@ open class EVNode {
     public var scale = SIMD2<Float>(1,1)
     public var rotation: Float = 0
     
-    public var vertices: [EVVertex] = []
-    public var indices: [UInt16]?
-
     public var children: [EVNode] = []
-    
-    var vertexBuffer: MTLBuffer!
-    var indexBuffer: MTLBuffer?
-    
-    public var renderPipelineState: MTLRenderPipelineState!
-        
+            
     var modelConstants = EVModelConstants()
-//    private var _updateModelConstants: Bool = true
     
     open var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
@@ -53,71 +44,19 @@ open class EVNode {
         ])
         return ((translation * rotation) * scale)
     }
-    
-    public var texture: MTLTexture?
-    
-    public init(id: UUID = UUID(), vertexShader: String? = nil, fragmentShader: String? = nil){
+        
+    public init(id: UUID = UUID()){
         self.id = id
-        
-        buildVertices()
-        buildBuffers()
-        
-        if vertexShader != fragmentShader {
-            let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-            
-            renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-            renderPipelineDescriptor.vertexFunction = EVEngine.shaders[vertexShader ?? "basic_vertex_shader"]
-            renderPipelineDescriptor.fragmentFunction = EVEngine.shaders[fragmentShader ?? "basic_fragment_shader"]
-            renderPipelineDescriptor.vertexDescriptor = EVEngine.vertexDescriptor
-            
-            renderPipelineState = try! EVEngine.device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
-        } else {
-            renderPipelineState = EVEngine.basicRenderPipelineState
-        }
-    }
-
-    open func buildVertices() {}
-    public final func buildBuffers(){
-        vertexBuffer = EVEngine.device.makeBuffer(bytes: vertices,
-                                                    length: EVVertex.stride(vertices.count),
-                                                    options: [])
-        if let indices = indices {
-            indexBuffer = EVEngine.device.makeBuffer(bytes: indices,
-                                                        length: UInt16.size(vertices.count),
-                                                        options: [])
-        }
     }
     
-    func render(renderCommandEncoder: MTLRenderCommandEncoder, parentModelMatrix: float4x4
-    ){
-        var modelConstants = EVModelConstants(modelMatrix: modelMatrix * parentModelMatrix)
-        
-        for node in children {
-            node.render(renderCommandEncoder: renderCommandEncoder, parentModelMatrix: modelConstants.modelMatrix)
-        }
-        
-        renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        renderCommandEncoder.setVertexBytes(&modelConstants, length: EVModelConstants.stride, index: 1)
-        
-        if let texture = texture {
-            renderCommandEncoder.setFragmentSamplerState(EVEngine.samplerState, index: 0)
-            renderCommandEncoder.setFragmentTexture(texture, index: 0)
-        }
-        
-        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0,
-                                             index: 0)
-        if let indexBuffer = indexBuffer, let indices = indices {
-            print(indices.count)
-            print(vertices.count)
-            renderCommandEncoder.drawIndexedPrimitives(type: .triangle,
-                                                 indexCount: indices.count,
-                                                 indexType: .uint16,
-                                                 indexBuffer: indexBuffer,
-                                                 indexBufferOffset: 0)
-        } else {
-            renderCommandEncoder.drawPrimitives(type: .triangle,
-                                                vertexStart: 0,
-                                                vertexCount: vertices.count)
-        }
+    func render(renderCommandEncoder: MTLRenderCommandEncoder, parentModelMatrix: matrix_float4x4) {
+          let modelViewMatrix = parentModelMatrix * modelMatrix
+          for child in children {
+              child.render(renderCommandEncoder: renderCommandEncoder, parentModelMatrix: modelViewMatrix)
+          }
+          
+          if let renderable = self as? EVRenderable {
+              renderable.doRender(renderCommandEncoder: renderCommandEncoder, modelViewMatrix: modelViewMatrix)
+          }
     }
 }

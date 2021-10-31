@@ -56,9 +56,8 @@ open class EVScene {
     func render(renderCommandEncoder: MTLRenderCommandEncoder, deltaTime: Float) {
         update(deltaTime: deltaTime)
         
-//        renderCommandEncoder.setVertexBytes(&sceneConstants, length: EVModelConstants.stride, index: 1)
-
         for node in nodes {
+            
             node.render(renderCommandEncoder: renderCommandEncoder, parentModelMatrix: modelMatrix)
         }
     }
