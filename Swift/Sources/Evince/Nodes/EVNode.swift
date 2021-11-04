@@ -24,52 +24,25 @@ open class EVNode {
     open var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
         
-        let cr = cos(radians)
-        let sr = sin(radians)
-        let x = position.x
-        let y = position.y
-        let g = scale.x
-        let h = scale.y
-        
-        return matrix_float4x4(rows: [
-            [g * cr, -(h * sr),  0, x*cr + y*sr],
-            [g * sr,  h * cr,  0, x*sr - y*cr],
-            [ 0,   0,  1, 0],
-            [ 0,   0,  0, 1]
+        let translation = matrix_float4x4(rows: [
+            [1, 0, 0, position.x],
+            [0, 1, 0, -position.y],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
         ])
-//        return matrix_float4x4(rows: [
-//            [1, 0, 0, position.x],
-//            [0, 1, 0, -position.y],
-//            [0, 0, 1, 0],
-//            [0, 0, 0, 1]
-//        ])
-        
-//        let translation = matrix_float4x4(rows: [
-//            [1, 0, 0, position.x],
-//            [0, 1, 0, -position.y],
-//            [0, 0, 1, 0],
-//            [0, 0, 0, 1]
-//        ])
-//        let rotation = matrix_float4x4(rows: [
-//            [cos(radians), -sin(radians), 0, 0],
-//            [sin(radians), cos(radians), 0, 0],
-//            [0, 0, 1, 0],
-//            [0, 0, 0, 1]
-//        ])
-//        let scale = matrix_float4x4(rows: [
-//            [scale.x, 0, 0, 0],
-//            [0, scale.y, 0, 0],
-//            [0, 0, 1, 0],
-//            [0, 0, 0, 1]
-//        ])
-//        return ((translation * rotation) * scale)
-        
-//        let a = matrix_float4x4(rows: [
-//            [cr, -sr,  0, x*cr + y*sr],
-//            [sr,  cr,  0, x*sr - y*cr],
-//            [ 0,   0,  1, 0],
-//            [ 0,   0,  0, 1]
-//        ])
+        let rotation = matrix_float4x4(rows: [
+            [cos(radians), -sin(radians), 0, 0],
+            [sin(radians), cos(radians), 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+        let scale = matrix_float4x4(rows: [
+            [scale.x, 0, 0, 0],
+            [0, scale.y, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+        return ((translation * rotation) * scale)
     }
         
     public init(id: UUID = UUID()){
