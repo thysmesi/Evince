@@ -9,7 +9,7 @@ import Metal
 import simd
 
 @available(iOS 13.0, *)
-open class EVPrimitive: EVNode {
+open class EVPrimitive: EVNode, EVRenderable {
     
     public var vertices: [EVVertex] = []
     public var indices: [UInt16]?
