@@ -9,7 +9,7 @@ import Metal
 import simd
 
 @available(iOS 13.0, *)
-open class EVPrimitive: EVNode, EVRenderable {    
+open class EVPrimitive: EVNode {
     
     public var vertices: [EVVertex] = []
     public var indices: [UInt16]?
@@ -53,7 +53,7 @@ open class EVPrimitive: EVNode, EVRenderable {
         }
     }
     
-    func doRender(renderCommandEncoder: MTLRenderCommandEncoder, modelViewMatrix: float4x4){
+    open func doRender(renderCommandEncoder: MTLRenderCommandEncoder, modelViewMatrix: float4x4){
         modelConstants.modelMatrix = modelViewMatrix
         
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
