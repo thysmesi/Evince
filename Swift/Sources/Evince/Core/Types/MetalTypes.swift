@@ -38,5 +38,5 @@ public struct EVVertex: sizeable{
 }
 
 public struct EVModelConstants: sizeable{
-    var modelMatrix = matrix_identity_float4x4
+    public var modelMatrix = matrix_identity_float4x4
 }
