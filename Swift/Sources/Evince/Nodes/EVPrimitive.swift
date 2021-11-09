@@ -14,7 +14,7 @@ open class EVPrimitive: EVNode, EVRenderable {
     public var vertices: [EVVertex] = []
     public var indices: [UInt16]?
 
-    var vertexBuffer: MTLBuffer!
+    public var vertexBuffer: MTLBuffer!
     var indexBuffer: MTLBuffer?
     
     public var renderPipelineState: MTLRenderPipelineState!

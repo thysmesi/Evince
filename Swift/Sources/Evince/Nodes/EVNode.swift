@@ -19,7 +19,7 @@ open class EVNode {
     
     public var children: [EVNode] = []
             
-    var modelConstants = EVModelConstants()
+    public var modelConstants = EVModelConstants()
     
     open var modelMatrix: matrix_float4x4 {
         let radians = -rotation * (Float.pi/180)
