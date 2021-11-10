@@ -9,6 +9,7 @@ import Metal
 
 @available(iOS 10.0, *)
 open class EVNode {
+    public let id: UUID
     
     public var vertices: [EVVertex] = []
     public var vertexBuffer: MTLBuffer!
@@ -22,7 +23,8 @@ open class EVNode {
 
     open func setBytes(renderCommandEncoder: MTLRenderCommandEncoder) {}
     
-    public init(vertices: [EVVertex], pipelineState: String, evince: Evince, texture: String? = nil, samplerState: String = "linear_sampler_state"){
+    public init(vertices: [EVVertex], pipelineState: String, evince: Evince, texture: String? = nil, samplerState: String = "linear_sampler_state", id: UUID = UUID()){
+        self.id = id
         self.vertices = vertices
         self.evince = evince
         self.samplerState = evince.samplerStates[samplerState]!
