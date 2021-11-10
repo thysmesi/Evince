@@ -8,7 +8,7 @@
 import Metal
 
 @available(iOS 10.0, *)
-public class EVNode {
+open class EVNode {
     
     public var vertices: [EVVertex] = []
     public var vertexBuffer: MTLBuffer!

@@ -9,7 +9,7 @@ import Foundation
 import MetalKit
 
 @available(iOS 10.0, *)
-public class Evince {
+open class Evince {
     
     
     // MARK: - Constants
