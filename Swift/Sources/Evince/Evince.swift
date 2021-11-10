@@ -146,6 +146,15 @@ open class Evince {
                                                   options: [])
         }
     }
+    public func addNode(_ node: EVNode, at index: Int) {
+        nodes.insert(node, at: index)
+        
+        if node.vertexBuffer == nil {
+            node.vertexBuffer = device.makeBuffer(bytes: node.vertices,
+                                                  length: EVVertex.stride(node.vertices.count),
+                                                  options: [])
+        }
+    }
     
     public func setTexture(_ key: String, named: String? = nil, scale: Double = 1.0){
         let _named = named ?? key
