@@ -1,23 +1,23 @@
 import MetalKit
 
-@available(iOS 13.0, *)
+@available(iOS 10.0, *)
 public class EVRenderer: NSObject {
     public static var screenSize = SIMD2<Float>(0,0)
     public static var aspectRatio: Float {
         return screenSize.x / screenSize.y
     }
     
-    public var scene: EVScene?
+    public var evince: Evince!
     
-    public init(mtkView: MTKView, scene: EVScene) {
+    public init(mtkView: MTKView, evince: Evince) {
         super.init()
         updateScreenSize(view: mtkView)
-        self.scene = scene
+        self.evince = evince
     }
     
 }
 
-@available(iOS 13.0, *)
+@available(iOS 10.0, *)
 extension EVRenderer: MTKViewDelegate{
     
     public func updateScreenSize(view: MTKView){
@@ -31,11 +31,11 @@ extension EVRenderer: MTKViewDelegate{
     public func draw(in view: MTKView) {
         guard let renderPassDescriptor = view.currentRenderPassDescriptor else { return }
         
-        let commandBuffer = EVEngine.commandQueue.makeCommandBuffer()
+        let commandBuffer = evince.commandQueue.makeCommandBuffer()
         
         let renderCommandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
         
-        scene?.render(renderCommandEncoder: renderCommandEncoder!, deltaTime: 1 / Float(view.preferredFramesPerSecond))
+        evince.render(renderCommandEncoder: renderCommandEncoder!, deltaTime: 1 / Float(view.preferredFramesPerSecond))
         
         renderCommandEncoder?.endEncoding()
         commandBuffer?.present(view.currentDrawable!)

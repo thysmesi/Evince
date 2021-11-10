@@ -2,15 +2,14 @@ import SwiftUI
 import MetalKit
 
 @available(iOS 13.0, *)
-public struct EVSceneView: View {
+public struct EvinceView: View {
     public let mtkView = MTKView(frame: UIScreen.main.bounds, device: MTLCreateSystemDefaultDevice()!)
     public let renderer: EVRenderer
     
     @State var mtkViewRepresentable: MTKViewRepresentable!
     
-    public init(scene: EVScene) {
-        renderer = EVRenderer(mtkView: mtkView, scene: scene)
-        renderer.scene = scene
+    public init(evince: Evince) {
+        renderer = EVRenderer(mtkView: mtkView, evince: evince)
         mtkView.delegate = renderer
     }
     
