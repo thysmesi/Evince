@@ -9,5 +9,8 @@ import Foundation
 import simd
 
 public struct EVModelConstants: Sizeable {
-    public var modelMatrix = matrix_identity_float4x4
+    public var modelMatrix: float4x4
+    public init(modelMatrix: float4x4 = matrix_identity_float4x4) {
+        self.modelMatrix = modelMatrix
+    }
 }
