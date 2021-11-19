@@ -23,7 +23,7 @@ let package = Package(
         .target(
             name: "Evince",
             path: "Swift/Sources/Evince",
-            resources: [.process("Core/Metal/EVShaders.metal")]
+            resources: []
         ),
     ]
 )

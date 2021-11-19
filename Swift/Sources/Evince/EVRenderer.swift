@@ -11,6 +11,7 @@ public class EVRenderer: NSObject {
     
     public init(mtkView: MTKView, evince: Evince) {
         super.init()
+        mtkView.isOpaque = false
         updateScreenSize(view: mtkView)
         self.evince = evince
     }
