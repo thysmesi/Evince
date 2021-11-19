@@ -26,6 +26,10 @@ public struct EvinceView: View {
         }
         .edgesIgnoringSafeArea(.all)
     }
+    
+    func clearColor(_ color: MTLClearColor) {
+        mtkView.clearColor = color
+    }
 }
 
 @available(iOS 13.0, *)
