@@ -86,8 +86,11 @@ open class Evince {
         setPipelineDescriptor("basic_pipeline_descriptor", vertex: "basic_vertex_shader", fragment: "basic_fragment_shader")
         setPipelineDescriptor("textured_pipeline_descriptor", vertex: "basic_vertex_shader", fragment: "textured_fragment_shader")
         setPipelineDescriptor("textured_transforming_pipeline_descriptor", vertex: "transforming_vertex_shader", fragment: "textured_fragment_shader")
+        setPipelineDescriptor("transforming_pipeline_descriptor", vertex: "transforming_vertex_shader", fragment: "basic_fragment_shader")
+        
         setPipelineState("textured_transforming_pipeline_state", pipelineDescriptor: "textured_transforming_pipeline_descriptor")
         setPipelineState("basic_pipeline_state", pipelineDescriptor: "basic_pipeline_descriptor")
+        setPipelineState("transforming_pipeline_state", pipelineDescriptor: "transforming_pipeline_descriptor")
         setPipelineState("textured_pipeline_state", pipelineDescriptor: "textured_pipeline_descriptor")
         
         let linear = MTLSamplerDescriptor()
